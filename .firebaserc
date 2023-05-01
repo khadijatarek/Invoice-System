@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ui-project-d452e": {
+      "hosting": {
+        "UI": [
+          "ui-project-d452e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ui-project-d452e"
+  }
+}

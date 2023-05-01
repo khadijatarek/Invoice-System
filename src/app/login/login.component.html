@@ -1,0 +1,20 @@
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+        <h3>Invoice Billing</h3>
+
+        <label for="username">Email</label>
+        <input formControlName="email" type="text" placeholder="Email or Phone" id="username">
+
+        <label for="password">Password</label>
+        <input  formControlName="password" type="password" placeholder="Password" id="password">
+
+        <button type="submit" [disabled]="myForm.invalid" routerLink="/home">Log In</button>
+
+        <label>Don't have an account?<a routerLink="/signup" style="color: #1845ad;"> Sign up now</a></label>
+    </form>
+</body>

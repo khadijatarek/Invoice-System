@@ -1,0 +1,80 @@
+body{margin-top:20px;
+  background:#eee;
+
+  }
+
+  @mixin hero_btn($col1, $col2, $pad1, $pad2, $bRadius) {
+    display: inline-block;
+    padding: $pad1 $pad2;
+    background-color: $col1;
+    border: 1px solid $col1;
+    color: $col2;
+    border-radius: $bRadius;
+    transition: transform 0.3s;
+  }
+
+
+  .invoice {
+  //  background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
+//  background-repeat: no-repeat;
+ // background-size: 100%;
+      padding: 30px;
+  }
+
+  .invoice h2 {
+    margin-top: 0px;
+    line-height: 0.8em;
+    color: black;
+  }
+
+  .invoice .small {
+    font-weight: 450;
+    color: #092157;
+   }
+
+  .invoice hr {
+    margin-top: 10px;
+    border-color: #ddd;
+  }
+
+  .invoice .table tr.line {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .invoice .table td {
+    border: none;
+  }
+
+  .invoice .identity {
+    margin-top: 10px;
+    font-size: 1.1em;
+    font-weight: 300;
+  }
+
+  .invoice .identity strong {
+    font-weight: 600;
+  }
+
+
+  .grid {
+   // background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
+   // background-repeat: no-repeat;
+   // background-size: 100%;
+      position: relative;
+    width: 100%;
+    background: #fff;
+   // color: #666666;
+    border-radius: 2px;
+    margin-bottom: 25px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  .btn-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    a {
+      @include hero_btn(#171717, white, 10px, 45px, 25px);
+    }
+  }
