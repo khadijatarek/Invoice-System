@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../shared/firebase.service';
 import { Router } from '@angular/router';
+import { GlobalVariableService } from '../shared/global-variable.service';
 
 
 
@@ -15,7 +16,7 @@ export class LoginComponent {
   showErrorMessage: boolean = false;
 
 
-  constructor( private formBuilder: FormBuilder, private db: FirebaseService,private router: Router)  {
+  constructor( private formBuilder: FormBuilder, private db: FirebaseService,private router: Router, private gv : GlobalVariableService)  {
     this.myForm = this.formBuilder.group({
       nID: ['',[Validators.required, Validators.minLength(4)]],
       password: ['',[Validators.required, Validators.minLength(8)]],
@@ -34,6 +35,7 @@ export class LoginComponent {
       console.log('Data sent to backend API:', nationalID);
       this.router.navigate(["/home"]);
       this.showErrorMessage = false;
+      this.gv.UserId = nationalID;
     });
     (error:any) => console.log(`error is : $(error)`);this.showErrorMessage = true;
     }
