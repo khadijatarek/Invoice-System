@@ -1,37 +1,37 @@
 
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <form [formGroup]="myform" (ngSubmit)="onSubmit()">
-      <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-right" style="font-size: xx-large; margin-left: 130px; font-weight: bold;">Sign Up</h4>
+  <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="p-3 py-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right" style="font-size: xx-large; margin-left: 130px; font-weight: bold;">Sign Up</h4>
+      </div>
+      <div class="row mt-2">
+          <div class="col-md-6"><label class="labels">First name<span style="color:red">*</span></label><input  formControlName="fname" type="text"  placeholder="first name" >
+         <!-- <div class="alert alert-danger" *ngIf="myform.fname.invalid"></div> -->
         </div>
-        <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">First name<span style="color:red">*</span></label><input  formControlName="fname" type="text"  placeholder="first name" >
-           <!-- <div class="alert alert-danger" *ngIf="myform.fname.invalid"></div> -->
-          </div>
-            <div class="col-md-6"><label class="labels">Last name<span style="color:red">*</span></label><input formControlName="lname" type="text"  placeholder="last name"></div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12"><label class="labels">Mobile Number<span style="color:red">*</span></label><input formControlName="pnumber" type="text" placeholder="enter phone number"></div>
-            <div class="col-md-12"><label class="labels">National Id<span style="color:red">*</span></label><input formControlName="NationalID" type="text" placeholder="enter your National ID"></div>
-            <div class="col-md-12"><label class="labels">Address<span style="color:red">*</span></label><input formControlName="address"  type="text"  placeholder="enter address "></div>
-            <div class="col-md-6"><label class="labels">Country<span style="color:red">*</span></label><input formControlName="country" type="text" placeholder="country" ></div>
-            <div class="col-md-12"><label class="labels">Postcode<span style="color:red">*</span></label><input  formControlName="postcode"  type="text" placeholder="enter postcode" ></div>
-            <div class="col-md-12"><label class="labels">Governerate<span style="color:red">*</span></label><input  formControlName="gov" type="text"  placeholder="enter area" ></div>
-            <div class="col-md-12"><label class="labels">Email<span style="color:red">*</span></label><input formControlName="email" type="text" placeholder="enter email" ></div>
-            <div class="col-md-12"><label class="labels">Password<span style="color:red">*</span></label><input formControlName="pass1" type="text"  placeholder="enter password"></div>
-            <div class="col-md-12"><label class="labels">Confirm password<span style="color:red">*</span></label><input formControlName="pass2" type="text"  placeholder="enter password again"></div>
-          <!--[disabled]="myform.invalid" --> <div class="col-md-12"><label class="labels">Sign up as<span style="color:red">*</span></label><input formControlName="type" type="text"  placeholder="user,admin or service provider" ></div>
+          <div class="col-md-6"><label class="labels">Last name<span style="color:red">*</span></label><input formControlName="lname" type="text"  placeholder="last name"></div>
+      </div>
+      <div class="row mt-3">
+          <div class="col-md-12"><label class="labels">Mobile Number<span style="color:red">*</span></label><input formControlName="pnumber" type="text" placeholder="enter phone number"></div>
+          <div class="col-md-12"><label class="labels">National Id<span style="color:red">*</span></label><input formControlName="NationalID" type="text" placeholder="enter your National ID"></div>
+          <div class="col-md-12"><label class="labels">Address<span style="color:red">*</span></label><input formControlName="address"  type="text"  placeholder="enter address "></div>
+          <div class="col-md-6"><label class="labels">Country<span style="color:red">*</span></label><input formControlName="country" type="text" placeholder="country" ></div>
+          <div class="col-md-12"><label class="labels">Postcode<span style="color:red">*</span></label><input  formControlName="postcode"  type="text" placeholder="enter postcode" ></div>
+          <div class="col-md-12"><label class="labels">Governerate<span style="color:red">*</span></label><input  formControlName="gov" type="text"  placeholder="enter area" ></div>
+          <div class="col-md-12"><label class="labels">Email<span style="color:red">*</span></label><input formControlName="email" type="text" placeholder="enter email" ></div>
+          <div class="col-md-12"><label class="labels">Password<span style="color:red">*</span></label><input formControlName="pass1" type="text"  placeholder="enter password"></div>
+          <div class="col-md-12"><label class="labels">Confirm password<span style="color:red">*</span></label><input formControlName="pass2" type="text"  placeholder="enter password again"></div>
+        <!--[disabled]="myform.invalid" --> <div class="col-md-12"><label class="labels">Sign up as<span style="color:red">*</span></label><input formControlName="type" type="text"  placeholder="user,admin or service provider" ></div>
 
-        </div>
+      </div>
 
-        <div class="mt-5 text-center"><button type="submit">SignUp</button></div>
-    </div>
-    </form>
+      <div class="mt-5 text-center"><button type="submit" routerLink="/login">SignUp</button></div>
+  </div>
+  </form>
 </body>
 
 
