@@ -73,11 +73,31 @@ export class FirebaseService {
 
 
   addPendingPaymentForUser(paymentType:string,userId,pay:payment){
-    return this.http.post(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json',pay);
+    return this.http.put(this.baseUrl+'customer/'+userId+'/'+paymentType+'/'+pay.id+'.json',pay);
   }
 
-  fetchAllPaymentsForUser(paymentType:string,userId){
-    return this.http.get<payment>(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json');
+  fetchAllPaymentsForUser(paymentType:string,userId)  {
+   return this.http.get<payment[]>(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json')
+    .pipe(
+      map(response =>{
+      /*  Object.keys(response).map(key =>
+          new payment(key, 
+            //response[key].dueDate,
+             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+        )
+      )*/
+      const pay=[];
+      for(const key in response){
+        if(response.hasOwnProperty(key)){
+          pay.push(  new payment(key, 
+            //response[key].dueDate,
+             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+          )
+        } 
+      } 
+      console.log(pay)
+      return pay;
+    }))
   }
 
 }
