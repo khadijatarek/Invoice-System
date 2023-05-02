@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators , FormControl, AbstractControl} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from '../shared/firebase.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +14,7 @@ export class SignupComponent {
 
   myform!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private Db :FirebaseService ) {
+  constructor(private formBuilder: FormBuilder,private Db :FirebaseService, private router: Router ) {
     this.myform = this.formBuilder.group({
       fname : ['', [Validators.required]],
       lname : ['', [Validators.required]],
@@ -83,6 +85,8 @@ id:number=0;
     {
       this.Db.AddAdmin(dataAdmin,this.id).subscribe(response => {
         console.log('Data sent to backend API:', response);
+        this.router.navigate(["/login"]);
+
       }),
       (error:any) => console.log(`error is : $(error)`);
     }
@@ -90,6 +94,8 @@ id:number=0;
     {
       this.Db.AddCustomer(dataCustomer, this.myform.controls['NationalID'].value).subscribe((response: any) => {
         console.log('Data added to Firebase Realtime Database:', response);
+        this.router.navigate(["/login"]);
+
       });
     }
     else if(this.myform.controls['type'].value == 'service provider')
@@ -97,6 +103,8 @@ id:number=0;
 
       this.Db.AddSP(dataSP,this.id).subscribe((response: any) => {
         console.log('Data added to Firebase Realtime Database:', response);
+        this.router.navigate(["/login"]);
+
       });
     }
 
