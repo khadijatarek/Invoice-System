@@ -59,13 +59,6 @@
                       >
                         Save
                       </button>
-                      <button
-                        class="btn btn-primary mb-3"
-                        type="button"
-                        (click)="updateTable()"
-                      >
-                        UPDATE TABLE
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -94,16 +87,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let pay of pendingPayments; index as i">
-                    <td>{{ i + 1 }}</td>
-                    <td class="text-center">{{ pay.unitsUsed }}</td>
-                    <td class="text-right">{{ rate }}</td>
-                    <td class="text-right">{{ pay.totalAmount }}</td>
-                    <td class="text-right">
-                      <button class="btn btn-primary mb-3">PAY</button>
-                    </td>
-                    <!--payments array-->
-                  </tr>
+                  <ng-container *ngFor="let pay of pendingPayments; index as i">
+                    <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td class="text-center">{{ pay.unitsUsed }}</td>
+                      <td class="text-right">{{ rate }}</td>
+                      <td class="text-right">{{ pay.totalAmount }}</td>
+                      <td class="text-right">
+                        <button
+                          class="btn btn-primary mb-3"
+                          (click)="payPendingPayment(pay)"
+                        >
+                          PAY
+                        </button>
+                      </td>
+                      <!--payments array-->
+                    </tr>
+                  </ng-container>
                 </tbody>
               </table>
               <div class="row">

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +23,37 @@ export class BillingService {
   }
 
   //add payment
-  addNewPendingPayment(pay:payment){
-    this.db.addPendingPaymentForUser(this.type,this.userId,pay).subscribe((response: any) => {
-      console.log('Data added to Firebase Realtime Database:', response);
-    });
+  addNewPendingPayment(userID:string,pay:payment,billType:string){
+    return this.db.addPendingPaymentForUser(userID,pay,billType);
   }
+
+  getPayments(userID:string,billType:string){
+    return this.db.getAllPayments(userID,billType).pipe(
+      map(response => {
+        const pay = [];
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            pay.push(new payment(key,
+              //response[key].dueDate,
+              response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+            );
+          }
+        }
+        return pay;
+      }));
+ ;
+  }
+
   //pay specific
   //pay all
   payPayment(pay:payment){
     //put in firebase
+    pay.isPaid=true;
+    console.log(pay)
+    return this.addNewPendingPayment(this.userId.toString(),pay,this.type);    
   }
   //get all payments
-  getAllPayments() :Observable<any[]> {
+ /* getAllPayments() :Observable<any[]> {
     // TODO :get from firebase
     return this.db.fetchAllPaymentsForUser(this.type, this.userId)
       .pipe(
@@ -50,7 +70,7 @@ export class BillingService {
           return pay;
         }));
    
-  }
+  }*/
 
   //filter pending
   filterPending(pay:payment[]): payment[]{

@@ -18,7 +18,7 @@ export class FirebaseService {
       'Access-Control-Allow-Origin' :'*'
     }),
   };
-  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com/';
+  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com';
 
   AddCustomer(data: any, id :any):Observable<any>
   {
@@ -72,11 +72,16 @@ export class FirebaseService {
   }*/
 
 
-  addPendingPaymentForUser(paymentType:string,userId,pay:payment){
-    return this.http.put(this.baseUrl+'customer/'+userId+'/'+paymentType+'/'+pay.id+'.json',pay);
+  addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
+    console.log(pay)
+    return this.http.put(`${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,pay);
   }
 
-  fetchAllPaymentsForUser(paymentType:string,userId)  {
+  getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
+    return this.http.get<payment[]>(`${this.baseUrl}/customer/${userId}/${paymentType}.json`);
+  }
+  
+  /*fetchAllPaymentsForUser(paymentType:string,userId)  {
    return this.http.get<payment[]>(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json')
     .pipe(
       map(response =>{
@@ -85,7 +90,7 @@ export class FirebaseService {
             //response[key].dueDate,
              response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
         )
-      )*/
+      )
       const pay=[];
       for(const key in response){
         if(response.hasOwnProperty(key)){
@@ -97,6 +102,6 @@ export class FirebaseService {
       } 
       return pay;
     }))
-  }
+  }*/
 
 }
