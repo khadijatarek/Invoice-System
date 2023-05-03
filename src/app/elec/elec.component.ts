@@ -90,16 +90,4 @@ export class ElecComponent implements OnInit {
     return bills.filter((bill) => !bill.isPaid);
   }
 
-/*  updateTable(){
-    this.totalAmount=0;
-    this.getAllPayments();
-    this.getAllPayments();
-    this.getAllPayments();
-    this.getAllPayments();
-    this.getAllPayments();
-    const pays=this.getUnpaidBills(this.pendingPayments);
-    for(const p of pays){
-      this.totalAmount+=p.totalAmount;
-    }
-  }*/
 }
