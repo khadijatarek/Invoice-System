@@ -1,98 +1,141 @@
 <app-navbar></app-navbar>
+<div id="main">
+  <div class="container">
+    <div class="box">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="detail-box" style="align-items: center">
+            <div>
+              <br />
+              <br />
+              <br />
+              <h1 style="color: white">water billing Section</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
-              <!-- BEGIN INVOICE -->
-            <div class="col-xs-12">
-              <div class="grid invoice">
-                <div class="grid-body" style=" padding:30px; border:#1845ad solid; border-radius: 25px;">
-                  <div class="invoice-title">
-                    <div class="row" style=" padding:20px; border:#1845ad solid; border-radius: 25px;">
-                      <div class="col-xs-12">
-                        <h2>Water Invoice :
-                        <span class="small" >Bill #10999</span></h2> <!--Insert var here-->
-                      </div>
-                    </div>
+    <!-- BEGIN INVOICE -->
+    <div class="col-xs-12">
+      <div class="grid invoice">
+        <div class="grid-body">
+          <div class="row">
+            <div class="col-6">
+              <div
+                class="card"
+                style="
+                  padding: 20px;
+                  border: #1845ad solid;
+                  border-radius: 25px;
+                "
+              >
+                <div class="card-body">
+                  <div class="col-auto">
+                    <h3>
+                      <span font-weight:bold>Enter number of used units:</span>
+                    </h3>
                   </div>
-                  <hr>
-                  <div class="row" style=" padding:30px; border:#1845ad solid; border-radius: 25px;">
-                    <div class="col-xs-6">
-                      <address>
-                        <strong style="font-size: xx-large;">Billed To:</strong><br>
-                        <p style="font-size: large; font-weight: 450; color: #092157;">
-                        MR. Omar Khaled<br>
-                        73, Maadi, Street 9<br>
-                        CAI, Egypt 94107<br>
-                        <abbr title="Phone">No:</abbr> (+020) 1007526614
-                        </p>
-                      </address>
-                    </div>
-                    <div class="row-xs-6 text-right">
-                      <address>
-                        <strong style="font-size: xx-large;">Payment Method:</strong><br>
-                        <p style="font-size: large; font-weight: 450; color: #092157;">
-
-                        Visa ending **** 1234<br>
-                        Omar@gmail.com<br>
-                        </p>
-                      </address>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-6 text-right">
-                        <address>
-                          <strong style="font-size: xx-large;">Order Date:</strong><br>
-                          <p style="font-size: large; font-weight: 450; color: #092157;">
-                          17/09/23
-                          </p>
-                        </address>
-                      </div>
-                  </div>
-                </div>
                   <div class="row">
-                    <div class="col-md-12">
-                      <h3 style="padding-top: 20px;">Bill Summary</h3>
-                      <table class="table table-striped">
-                        <thead>
-                          <tr class="line">
-                            <td><strong>#</strong></td>
-                            <td class="text-center"><strong>Month</strong></td>
-                            <td class="text-center"><strong>HRS</strong></td>
-                            <td class="text-right"><strong>RATE</strong></td>
-                            <td class="text-right"><strong>SUBTOTAL</strong></td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td><strong>August</strong><br>fwhfrhfgrfurehfnrefh urhefu reufhuruerhfm hfuerhferf brfbreubfrefre </td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">$75</td>
-                            <td class="text-right">$1,125.00</td>
-                          </tr>
-
-                          <tr>
-                            <td colspan="3"></td>
-                            <td class="text-right"><strong>Taxes</strong></td>
-                            <td class="text-right"><strong>N/A</strong></td>
-                          </tr>
-                          <tr>
-                            <td colspan="3">
-                            </td><td class="text-right"><strong>Total</strong></td>
-                            <td class="text-right"><strong>$2,400.00</strong></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="btn-box">
-                        <a href="">
-                          Pay your bill
-                        </a>
-                      </div>
+                    <div class="col-auto">
+                      <input
+                        type="text"
+                        [(ngModel)]="enteredUnits"
+                        placeholder="number of units"
+                        class="form-control"
+                        maxLength="10"
+                        size="20"
+                      />
                     </div>
-
+                    <!--Insert var here-->
+                    <div class="col-auto">
+                      <button
+                        class="btn btn-primary mb-3"
+                        type="button"
+                        (click)="addPayment()"
+                      >
+                        Save
+                      </button>
+                    </div>
                   </div>
-
                 </div>
               </div>
             </div>
-            <!-- END INVOICE -->
+            <div class="col-2"></div>
+            <div class="col-4">
+              <div class="img-box">
+                <img src="assets/electricity.png" width="150" height="150" />
+              </div>
+            </div>
+
+            <hr />
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 style="padding-top: 20px">Pending Payments</h3>
+              <table class="table table-striped">
+                <thead>
+                  <tr class="line">
+                    <td><strong>#</strong></td>
+                    <!--<td class="text-center"><strong>Month</strong></td>-->
+                    <td class="text-center"><strong>UNITS</strong></td>
+                    <td class="text-right"><strong>RATE</strong></td>
+                    <td class="text-right"><strong>SUBTOTAL</strong></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let pay of pendingPayments; index as i">
+                    <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td class="text-center">{{ pay.unitsUsed }}</td>
+                      <td class="text-right">{{ rate }}</td>
+                      <td class="text-right">{{ pay.totalAmount }}</td>
+                      <td class="text-right">
+                        <button
+                          class="btn btn-primary mb-3"
+                          (click)="payPendingPayment(pay)"
+                        >
+                          PAY
+                        </button>
+                      </td>
+                      <!--payments array-->
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total number of pending Payments</th>
+                    <th class="text-right">Total Amount</th>
+                    <th></th>
+                  </tr>
+                  <tr></tr>
+                </tfoot>
+              </table>
+              <div class="row">
+                <div class="col-auto">
+                  <div class="btn-box">
+                    <a href=""> Pay your bill </a>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="btn-box">
+                    <a href=""> View Payment History </a>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="btn-box">
+                    <a href="">Policy </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END INVOICE -->
   </div>
+</div>

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { payment } from '../models/payment';
-import { FirebaseService } from '../shared/firebase.service';
-import { map } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { BillingService } from '../shared/billing.service';
 import { GlobalVariableService } from '../shared/global-variable.service';
+import { RateService } from '../shared/rate.service';
 
 
 @Component({
@@ -15,21 +14,26 @@ import { GlobalVariableService } from '../shared/global-variable.service';
 })
 export class ElecComponent implements OnInit {
   pendingPayments:payment[]=[];
-  rate:number;
+  totalAmount:number;
   enteredUnits:string;
   
-  type:string="elecBills";
+  rate:number;
+  type:string;
+  
   userID:number;
   
-  constructor(private billing:BillingService, private userInfo:GlobalVariableService ){
+  constructor(private billing:BillingService, private userInfo:GlobalVariableService , private rateServ:RateService){
   } 
   ngOnInit(): void {
   
     //this.userID=userInfo.UserId;  
     this.userID=1111;
-    this.billing.type=this.type;
-    this.rate =6;
-    this.billing.rate=this.rate;//gai mn el service
+
+    //gai mn el service
+    this.rate =this.rateServ.elecRate;
+    this.type=this.rateServ.elecBillType;
+   
+    //update table
     this.getAllPayments();
   }
 
@@ -37,7 +41,7 @@ export class ElecComponent implements OnInit {
     window.alert('new reading saved')
     this.getAllPayments();
     this.getAllPayments();
-
+    
     //building payment
     let generatedPaymentId= uuidv4();
     
@@ -48,7 +52,8 @@ export class ElecComponent implements OnInit {
     let newPayment=new payment(generatedPaymentId,parseInt(this.enteredUnits),totalPaymentAmount,false);
     
     //save to firebase
-    this.billing.addNewPendingPayment(this.userID.toString(),newPayment,this.type).subscribe((response: any) => {
+    this.billing.addNewPendingPayment(this.userID.toString(),newPayment,this.type)
+    .subscribe((response: any) => {
       console.log('Data added to Firebase Realtime Database:', response);
     });
 
@@ -63,12 +68,11 @@ export class ElecComponent implements OnInit {
 
   payPendingPayment(pay :payment){
    // window.alert('payment done')
-    console.log(pay.isPaid)
     pay.isPaid=true;
-    console.log(pay)
 
-    this.billing.payPayment(pay).subscribe((response: any) => {
-      console.log('Data added to Firebase Realtime Database:', response);
+    this.billing.payPayment(this.userID.toString(),pay,this.type)
+    .subscribe((response: any) => {
+      console.log('Data updated in Firebase Realtime Database:', response);
     });
     //update table
     window.alert('payment done')
@@ -85,4 +89,17 @@ export class ElecComponent implements OnInit {
   getUnpaidBills(bills: payment[]): payment[] {
     return bills.filter((bill) => !bill.isPaid);
   }
+
+/*  updateTable(){
+    this.totalAmount=0;
+    this.getAllPayments();
+    this.getAllPayments();
+    this.getAllPayments();
+    this.getAllPayments();
+    this.getAllPayments();
+    const pays=this.getUnpaidBills(this.pendingPayments);
+    for(const p of pays){
+      this.totalAmount+=p.totalAmount;
+    }
+  }*/
 }
