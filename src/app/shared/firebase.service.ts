@@ -95,7 +95,6 @@ export class FirebaseService {
           )
         } 
       } 
-      console.log(pay)
       return pay;
     }))
   }

@@ -30,8 +30,7 @@ export class ElecComponent implements OnInit {
     this.billing.type=this.type;
     this.rate =6;
     this.billing.rate=this.rate;//gai mn el service
-    this.filterPendingPayments();
-    
+    //updat table  
   }
 
   addPayment(){
@@ -45,29 +44,47 @@ export class ElecComponent implements OnInit {
     let newPayment=new payment(generatedPaymentId,parseInt(this.enteredUnits),totalPaymentAmount,false);
     this.billing.addNewPendingPayment(newPayment);
 
+    //update table
+
     //clearing enteredUnits
-    this.filterPendingPayments();
     this.enteredUnits = '';
-    //this.getAllPayments();
     //////
+    this.updateTable()
+
   }
  
-  payPendingPayment(pay :payment){
-    this.billing.payPayment(pay);
-    this.filterPendingPayments();
+  updateTable(){
+    this.getAllPayments();
+    this.pendingPayments=this.billing.filterPending(this.allPayments);
   }
 
-  filterPendingPayments(){
-   this.billing.getAllPayments()
+  payPendingPayment(pay :payment){
+    this.billing.payPayment(pay);
+    //update table
+  }
+
+  getAllPayments(){
+    this.billing.getAllPayments()
+    .subscribe((payments) => {
+      this.allPayments = payments;
+      return(payments);
+    }); 
+  }
+  /*filterPendingPayments(){
+   this.clearPayments()
+    this.billing.getAllPayments()
     .subscribe((payments) => {
       this.allPayments = payments;
     });
-
-    this.pendingPayments=[]
     for (const pay of this.allPayments){
       if (pay.isPaid == false){
         this.pendingPayments.push(pay);
       }
     }
   }
+  clearPayments(){
+    this.pendingPayments=[];
+    this.allPayments=[];
+  }*/
+
 }

@@ -12,8 +12,7 @@ export class BillingService {
   type:string;
   userId:number=1111;
   rate:number;
-  allPayments:payment[];
-
+  
 
   constructor(private db:FirebaseService) {
 
@@ -52,5 +51,18 @@ export class BillingService {
         }));
    
   }
+
+  //filter pending
+  filterPending(pay:payment[]): payment[]{
+    let filtered: payment[]=[];
+    for(const p of pay){
+      if(p.isPaid==false){
+        filtered.push(p);
+      }
+    }
+    return filtered
+  }
+  
+ 
   
 }
