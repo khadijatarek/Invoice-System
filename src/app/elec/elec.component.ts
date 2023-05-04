@@ -21,6 +21,8 @@ export class ElecComponent implements OnInit {
   type:string;
   
   userID:number;
+
+  selectedDate;
   
   constructor(private billing:BillingService, private userInfo:GlobalVariableService , private rateServ:RateService){
   } 

@@ -19,6 +19,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
+import { DateFormatPipe } from './date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     WaterComponent,
     ProfileComponent,
     TelComponent,
+    DateFormatPipe,
     ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
 
   ],
   providers: [],
