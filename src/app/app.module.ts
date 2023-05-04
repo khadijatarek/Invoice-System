@@ -19,6 +19,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
+import { SPsignupComponent } from './spsignup/spsignup.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     WaterComponent,
     ProfileComponent,
     TelComponent,
+    SPsignupComponent,
     ],
   imports: [
     BrowserModule,
