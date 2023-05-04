@@ -19,6 +19,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
+import { SPsignupComponent } from './spsignup/spsignup.component';
 import { DateFormatPipe } from './date-format.pipe';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { DateFormatPipe } from './date-format.pipe';
     WaterComponent,
     ProfileComponent,
     TelComponent,
+    SPsignupComponent,
     DateFormatPipe,
     ],
   imports: [

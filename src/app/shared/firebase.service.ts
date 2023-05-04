@@ -28,12 +28,12 @@ export class FirebaseService {
 
   AddAdmin(data:any, id:any):Observable<any>
   {
-    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/admins' +" "+ ".json", data);
+    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/admins/' + id + ".json", data,this.httpOptions);
   }
 
   AddSP (data: any, id:any):Observable<any>
   {
-    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders' +" " + ".json", data);
+    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/' + id  + ".json", data,this.httpOptions);
 
   }
   authenticate(NationalID: string, password: string): Observable<string> {
