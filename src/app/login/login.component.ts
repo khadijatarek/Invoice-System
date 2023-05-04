@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../shared/firebase.service';
 import { Router } from '@angular/router';
 import { GlobalVariableService } from '../shared/global-variable.service';
-
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent {
   showErrorMessage: boolean = false;
 
 
-  constructor( private formBuilder: FormBuilder, private db: FirebaseService,private router: Router, private gv : GlobalVariableService)  {
+  constructor(private http:HttpClient, private formBuilder: FormBuilder, private db: FirebaseService,private router: Router, private gv : GlobalVariableService)  {
     this.myForm = this.formBuilder.group({
       nID: ['',[Validators.required, Validators.minLength(4)]],
       password: ['',[Validators.required, Validators.minLength(8)]],
@@ -24,7 +24,8 @@ export class LoginComponent {
   }
 
 
-  onSubmit(form: FormGroup) {
+ async onSubmit(form: FormGroup) {
+
     console.log('Valid?', form.valid); // true or false
 
     const nID = this.myForm.controls['nID'].value;
@@ -33,11 +34,23 @@ export class LoginComponent {
 
     this.db.authenticate(nID, password).subscribe(nationalID => {
       console.log('Data sent to backend API:', nationalID);
-      this.router.navigate(["/home"]);
       this.showErrorMessage = false;
-      this.gv.UserId = nationalID;
-    });
+  });
+
+  this.gv.custTelType = await this.http.get<string>(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${nID}/telBillType/.json`).toPromise();
+
+
+    console.log("user is: ",this.gv.userType);
+    console.log("Id is: ",this.gv.UserId);
+    console.log('bill type is:', this.gv.custTelType);
+
+    if(this.showErrorMessage == false)
+     {
+      this.router.navigate(["/home"]);
+     }
+
     (error:any) => console.log(`error is : $(error)`);this.showErrorMessage = true;
+
     }
 
 }

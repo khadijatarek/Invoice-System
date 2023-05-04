@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
 import { SPsignupComponent } from './spsignup/spsignup.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { SpPageComponent } from './sp-page/sp-page.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { SPsignupComponent } from './spsignup/spsignup.component';
     ProfileComponent,
     TelComponent,
     SPsignupComponent,
+    AdminPageComponent,
+    SpPageComponent,
     ],
   imports: [
     BrowserModule,

@@ -9,6 +9,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { WaterComponent } from './water/water.component';
 import { TelComponent } from './tel/tel.component';
 import { SPsignupComponent } from './spsignup/spsignup.component';
+import { SpPageComponent } from './sp-page/sp-page.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 const routes: Routes = [
   {path:"home", component: HomeComponent},
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path:"water", component:WaterComponent},
   {path:"profile", component:ProfileComponent},
   {path:"tel" , component:TelComponent},
-  {path: "spsignup", component:SPsignupComponent}
+  {path: "spsignup", component:SPsignupComponent},
+  {path: "admin", component:AdminPageComponent},
+  {path:"sp", component: SpPageComponent},
 ];
 
 @NgModule({

@@ -12,19 +12,19 @@
 
       <div class="row mt-3">
           <label for="numberOfServices">Number of Services:</label>
-          <input type="number" id="numberOfServices" formControlName="numberOfServices">
+          <input type="number"  [formControlName]="'numberOfServices'">
 
-          <ng-container *ngIf="spForm.controls['numberOfServices'].value">
+          <ng-container *ngIf="spForm && spForm.controls['numberOfServices']">
             <div *ngFor="let i of generateArray(spForm.controls['numberOfServices'].value)">
               <h3>Service {{ i + 1 }}</h3>
-              <div class="col-md-12"> <label class="labels" for="serviceId{{ i }}">Service ID:</label>
-              <input type="text" id="serviceId{{ i }}" formControlName="serviceId{{ i +1 }}"  placeholder="Enter desired service ID"> </div>
+              <div class="col-md-12"> <label class="labels" for="serviceId{{i}}" >Service ID:</label>
+              <input type="text" [formControlName]="'serviceId' + (i + 1)" placeholder="Enter desired service ID"> </div>
 
-              <div class="col-md-12">  <label class="labels" for="serviceName{{ i }}">Service Name:</label>
-              <input type="text" id="serviceName{{ i }}" formControlName="serviceName{{ i+1 }}" placeholder="Enter service name"></div>
+              <div class="col-md-12">  <label class="labels" for="serviceName{{i}}">Service Name:</label>
+              <input type="text"  [formControlName]="'serviceName' + (i + 1)" placeholder="Enter service name"></div>
 
-              <div class="col-md-12"> <label class="labels" for="serviceDescription{{ i }}">Service Description:</label>
-              <input type="text" id="serviceDescription{{ i }}" formControlName="serviceDescription{{ i +1}}" placeholder="Enter service Description"> </div>
+              <div class="col-md-12"> <label class="labels" for="serviceDescription{{i}}">Service Description:</label>
+              <input type="text"   [formControlName]="'serviceDescription' + (i + 1)" placeholder="Enter service Description"> </div>
               </div>
             </ng-container>
       </div>

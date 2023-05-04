@@ -105,3 +105,52 @@ button:focus {
   background: #1845ad;
   box-shadow: none
 }
+.form-check-input[type="radio"] {
+  display: none;
+}
+
+.form-check-label {
+  cursor: pointer;
+  position: relative;
+  padding-left: 2.5em;
+  margin-bottom: 1em;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  user-select: none;
+}
+
+.form-check-label:before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  border: 2px solid #ced4da;
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+}
+
+.form-check-label:after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: #007bff;
+  position: absolute;
+  left: 0.25em;
+  top: 0.75em;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.form-check-input[type="radio"]:checked + .form-check-label:after {
+  opacity: 1;
+}
+
+/* Adjust label positioning */
+.form-check-inline .form-check-label {
+  margin-right: 1.5em;
+}

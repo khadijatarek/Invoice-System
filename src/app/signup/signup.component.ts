@@ -20,21 +20,22 @@ export class SignupComponent {
   constructor(private formBuilder: FormBuilder,private Db :FirebaseService, private router: Router,private gb: GlobalVariableService ) {
     this.myform = this.formBuilder.group({
       fname : ['', [Validators.required]],
-      lname : ['', [Validators.required]],
+      lname : ['', ],
       pnumber : ['', [Validators.required,  Validators.minLength(11)]],
       NationalID : ['', [Validators.required,  Validators.minLength(4)]],
-      address : ['', [Validators.required]],
+      address : ['', ],
       country : ['', [Validators.required]],
-      postcode : ['', [Validators.required]],
+      postcode : ['', ],
       gov : ['', [Validators.required]],
-      email: ['',[Validators.required, Validators.email]],
+      email: ['',[ Validators.email]],
+      myRadio: ['', Validators.required],
       pass1: ['',[Validators.required, Validators.pattern(
         /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
       )]],
       pass2: ['',[Validators.required, Validators.pattern(
         /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
       )]],
-     type:  ['',[Validators.required,]],
+      type:  ['',[Validators.required,]],
     });
   }
 
@@ -43,6 +44,7 @@ export class SignupComponent {
 
   onSubmit() {
 
+   // console.log(this.myform.get('myRadio').value);
     this.gb.signupId=this.myform.controls['NationalID'].value;
 
     const dataAdmin = {
@@ -64,12 +66,12 @@ export class SignupComponent {
       postcode : this.myform.controls['postcode'].value,
       address :this.myform.controls['address'].value,
       pnumber : this.myform.controls['pnumber'].value,
+      telBillType: this.myform.controls['myRadio'].value,
     };
 
     const dataSP ={
       fname : this.myform.controls['fname'].value,
       NationalID : this.myform.controls['NationalID'].value,
-      email: this.myform.controls['email'].value,
       password: this.myform.controls['pass1'].value,
     };
 
@@ -80,10 +82,11 @@ export class SignupComponent {
     {
       this.Db.AddAdmin(dataAdmin,this.myform.controls['NationalID'].value).subscribe(response => {
         console.log('Data sent to backend API:', response);
-        this.router.navigate(["/login"]);
 
       }),
       (error:any) => console.log(`error is : $(error)`);
+      this.router.navigate(["/login"]);
+
     }
 
 
@@ -91,32 +94,51 @@ export class SignupComponent {
     {
       this.Db.AddCustomer(dataCustomer, this.myform.controls['NationalID'].value).subscribe((response: any) => {
         console.log('Data added to Firebase Realtime Database:', response);
-        this.router.navigate(["/login"]);
-
       });
+      this.router.navigate(["/login"]);
+
     }
 
 
     else if(this.myform.controls['type'].value == 'service provider')
     {
       this.gb.signupId = this.myform.controls['NationalID'].value;
+      this.isServiceProvider =true;
       this.Db.AddSP(dataSP,this.myform.controls['NationalID'].value).subscribe((response: any) => {
         console.log('Data added to Firebase Realtime Database:', response);
       });
+  //    this.router.navigate(["/spsignup"]);
+  this.router.navigate(["/login"]);
     }
 
   }
 
+}
+
+
+/*
   onTypeChange() {
+
+    const dataSP ={
+      fname : this.myform.controls['fname'].value,
+      NationalID : this.myform.controls['NationalID'].value,
+      email: this.myform.controls['email'].value,
+      password: this.myform.controls['pass1'].value,
+    };
+
     const type = this.myform.controls['type'].value;
   //  this.nationalId=this.myform.controls['NationalID'].value;
     this.isServiceProvider = type === 'service provider';
     console.log("entered type: ", type);
     console.log("isServiceProvider: ", this.isServiceProvider);
     console.log("national id: ", this.nId);
+
     if(type == 'service provider')
     {
       this.gb.signupId=this.myform.controls['NationalID'].value;
+      this.Db.AddSP(dataSP,this.myform.controls['NationalID'].value).subscribe((response: any) => {
+        console.log('Data added to Firebase Realtime Database:', response);
+      });
       this.router.navigate(["/spsignup"]);
     }
     else{
