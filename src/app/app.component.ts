@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'UI';
+  username= "example@gmail.com";;
+
+  constructor() {
+    this.username = localStorage.getItem('username');
+  }
 }

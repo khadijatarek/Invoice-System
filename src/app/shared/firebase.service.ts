@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { idToken } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { payment } from '../models/payment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class FirebaseService {
       'Access-Control-Allow-Origin' :'*'
     }),
   };
+  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com/';
 
   AddCustomer(data: any, id :any):Observable<any>
   {
@@ -35,7 +37,7 @@ export class FirebaseService {
 
   }
 
-  private baseUrl = 'https://ui-project-d452e-default-rtdb.firebaseio.com/customer/5555';
+  //private baseUrl = 'https://ui-project-d452e-default-rtdb.firebaseio.com/customer/5555';
 
 
   authenticate(NationalID: string, password: string): Observable<string> {
@@ -69,5 +71,33 @@ export class FirebaseService {
       );
   }*/
 
+
+  addPendingPaymentForUser(paymentType:string,userId,pay:payment){
+    return this.http.put(this.baseUrl+'customer/'+userId+'/'+paymentType+'/'+pay.id+'.json',pay);
+  }
+
+  fetchAllPaymentsForUser(paymentType:string,userId)  {
+   return this.http.get<payment[]>(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json')
+    .pipe(
+      map(response =>{
+      /*  Object.keys(response).map(key =>
+          new payment(key, 
+            //response[key].dueDate,
+             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+        )
+      )*/
+      const pay=[];
+      for(const key in response){
+        if(response.hasOwnProperty(key)){
+          pay.push(  new payment(key, 
+            //response[key].dueDate,
+             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+          )
+        } 
+      } 
+      console.log(pay)
+      return pay;
+    }))
+  }
 
 }
