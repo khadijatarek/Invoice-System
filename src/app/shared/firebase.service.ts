@@ -69,11 +69,11 @@ export class FirebaseService {
 
   //payments
   addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
-    return this.http.put(`${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,pay);
+    return this.http.put(`${this.baseUrl}/customers/${userId}/${paymentType}/${pay.id}.json`,pay);
   }
   
   getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
-    return this.http.get<payment[]>(`${this.baseUrl}/customer/${userId}/${paymentType}.json`);
+    return this.http.get<payment[]>(`${this.baseUrl}/customers/${userId}/${paymentType}.json`);
   }
 
 }
