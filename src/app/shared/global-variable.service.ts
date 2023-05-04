@@ -8,6 +8,7 @@ export class GlobalVariableService {
   constructor() { }
 
   UserId: any;
+  userType;  
   signupId: any;
 
 }

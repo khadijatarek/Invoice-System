@@ -18,7 +18,7 @@ export class FirebaseService {
       'Access-Control-Allow-Origin' :'*'
     }),
   };
-  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com/';
+  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com';
 
   AddCustomer(data: any, id :any):Observable<any>
   {
@@ -36,10 +36,6 @@ export class FirebaseService {
     return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/' + id  + ".json", data,this.httpOptions);
 
   }
-
-  //private baseUrl = 'https://ui-project-d452e-default-rtdb.firebaseio.com/customer/5555';
-
-
   authenticate(NationalID: string, password: string): Observable<string> {
     return this.http.get(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${NationalID}.json`).pipe(
       map((response: any) => {
@@ -71,33 +67,13 @@ export class FirebaseService {
       );
   }*/
 
-
-  addPendingPaymentForUser(paymentType:string,userId,pay:payment){
-    return this.http.put(this.baseUrl+'customer/'+userId+'/'+paymentType+'/'+pay.id+'.json',pay);
+  //payments
+  addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
+    return this.http.put(`${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,pay);
   }
-
-  fetchAllPaymentsForUser(paymentType:string,userId)  {
-   return this.http.get<payment[]>(this.baseUrl+'customer/'+userId+'/'+paymentType+'.json')
-    .pipe(
-      map(response =>{
-      /*  Object.keys(response).map(key =>
-          new payment(key, 
-            //response[key].dueDate,
-             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
-        )
-      )*/
-      const pay=[];
-      for(const key in response){
-        if(response.hasOwnProperty(key)){
-          pay.push(  new payment(key, 
-            //response[key].dueDate,
-             response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
-          )
-        } 
-      } 
-      console.log(pay)
-      return pay;
-    }))
+  
+  getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
+    return this.http.get<payment[]>(`${this.baseUrl}/customer/${userId}/${paymentType}.json`);
   }
 
 }
