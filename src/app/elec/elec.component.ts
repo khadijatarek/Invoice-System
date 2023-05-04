@@ -38,6 +38,7 @@ export class ElecComponent implements OnInit {
   }
 
   addPayment(){
+    
     window.alert('new reading saved')
     this.getAllPayments();
     this.getAllPayments();
