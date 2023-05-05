@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class RateService {
   constructor() {}
-  elecRate: number = 9.5;
+  /*elecRate: number = 9.5;
   waterRate: number = 8;
   postPaidTelRate: number = 88;
   prePaidTelRate: number = 88;
@@ -14,13 +14,22 @@ export class RateService {
   waterExtraFeesRate: number = 0.3;
   prePaidTelExtraFeesRate: number = 0.3;
   postPaidTelExtraFeesRate: number = 0.3;
-
+*/
   elecBillType = 'elecBills';
   waterBillType = 'waterBills';
   telBillType = 'telBills';
 
-  /*
-  get _elecRate(): number {
+  private _elecRate: number = 9.5;
+  private _waterRate: number = 8;
+  private _postPaidTelRate: number = 88;
+  private _prePaidTelRate: number = 88;
+
+  private _elecExtraFeesRate: number = 0.2;
+  private _waterExtraFeesRate: number = 0.3;
+  private _prePaidTelExtraFeesRate: number = 0.3;
+  private _postPaidTelExtraFeesRate: number = 0.3;
+
+  get elecRate(): number {
     return this._elecRate;
   }
 
@@ -36,36 +45,51 @@ export class RateService {
     this._waterRate = value;
   }
 
-  get telRate(): number {
-    return this._telRate;
+  get postPaidTelRate(): number {
+    return this._postPaidTelRate;
   }
 
-  set telRate(value: number) {
-    this._telRate = value;
+  set postPaidTelRate(value: number) {
+    this._postPaidTelRate = value;
   }
 
-  get elecBillType(): string {
-    return this._elecBillType;
+  get prePaidTelRate(): number {
+    return this._prePaidTelRate;
   }
 
-  set elecBillType(value: string) {
-    this._elecBillType = value;
+  set prePaidTelRate(value: number) {
+    this._prePaidTelRate = value;
   }
 
-  get waterBillType(): string {
-    return this._waterBillType;
+  get elecExtraFeesRate(): number {
+    return this._elecExtraFeesRate;
   }
 
-  set waterBillType(value: string) {
-    this._waterBillType = value;
+  set elecExtraFeesRate(value: number) {
+    this._elecExtraFeesRate = value;
   }
 
-  get telBillType(): string {
-    return this._telBillType;
+  get waterExtraFeesRate(): number {
+    return this._waterExtraFeesRate;
   }
 
-  set telBillType(value: string) {
-    this._telBillType = value;
+  set waterExtraFeesRate(value: number) {
+    this._waterExtraFeesRate = value;
   }
-  */
+
+  get prePaidTelExtraFeesRate(): number {
+    return this._prePaidTelExtraFeesRate;
+  }
+
+  set prePaidTelExtraFeesRate(value: number) {
+    this._prePaidTelExtraFeesRate = value;
+  }
+
+  get postPaidTelExtraFeesRate(): number {
+    return this._postPaidTelExtraFeesRate;
+  }
+
+  set postPaidTelExtraFeesRate(value: number) {
+    this._postPaidTelExtraFeesRate = value;
+  }
 }
