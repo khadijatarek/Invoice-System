@@ -18,20 +18,6 @@ export class WaterComponent {
 
   rate: number;
   type: string;
-
-  userID: number;
-
-  constructor(
-    private billing: BillingService,
-    private userInfo: GlobalVariableService,
-    private rateServ: RateService
-  ) {}
-  pendingPayments: payment[] = [];
-  totalAmount: number;
-  enteredUnits: string;
-
-  rate: number;
-  type: string;
   extraRate: number;
 
   userID: number;
