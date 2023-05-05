@@ -21,6 +21,7 @@ import {AngularFireModule} from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
 import { SPsignupComponent } from './spsignup/spsignup.component';
 import { DateFormatPipe } from './date-format.pipe';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DateFormatPipe } from './date-format.pipe';
     TelComponent,
     SPsignupComponent,
     DateFormatPipe,
+    PaymentHistoryComponent,
     ],
   imports: [
     BrowserModule,

@@ -6,49 +6,65 @@ import { map } from 'rxjs/operators';
 import { payment } from '../models/payment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  httpOptions= {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' :'*'
+      'Access-Control-Allow-Origin': '*',
     }),
   };
-  baseUrl='https://ui-project-d452e-default-rtdb.firebaseio.com';
+  baseUrl = 'https://ui-project-d452e-default-rtdb.firebaseio.com';
 
-  AddCustomer(data: any, id :any):Observable<any>
-  {
-    return this.http.put<any>('https://ui-project-d452e-default-rtdb.firebaseio.com/customer/'+ id +".json",data ,this.httpOptions);
-  }
-
-
-  AddAdmin(data:any, id:any):Observable<any>
-  {
-    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/admins/' + id + ".json", data,this.httpOptions);
-  }
-
-  AddSP (data: any, id:any):Observable<any>
-  {
-    return this.http.put('https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/' + id  + ".json", data,this.httpOptions);
-
-  }
-  authenticate(NationalID: string, password: string): Observable<string> {
-    return this.http.get(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${NationalID}.json`).pipe(
-      map((response: any) => {
-        if (response && response.password === password) {
-          return NationalID;
-        } else {
-          throw new Error('Invalid national ID or password');
-        }
-      })
+  AddCustomer(data: any, id: any): Observable<any> {
+    return this.http.put<any>(
+      'https://ui-project-d452e-default-rtdb.firebaseio.com/customer/' +
+        id +
+        '.json',
+      data,
+      this.httpOptions
     );
   }
 
- /* login (email: any, password: any): Observable<any>
+  AddAdmin(data: any, id: any): Observable<any> {
+    return this.http.put(
+      'https://ui-project-d452e-default-rtdb.firebaseio.com/admins/' +
+        id +
+        '.json',
+      data,
+      this.httpOptions
+    );
+  }
+
+  AddSP(data: any, id: any): Observable<any> {
+    return this.http.put(
+      'https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/' +
+        id +
+        '.json',
+      data,
+      this.httpOptions
+    );
+  }
+  authenticate(NationalID: string, password: string): Observable<string> {
+    return this.http
+      .get(
+        `https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${NationalID}.json`
+      )
+      .pipe(
+        map((response: any) => {
+          if (response && response.password === password) {
+            return NationalID;
+          } else {
+            throw new Error('Invalid national ID or password');
+          }
+        })
+      );
+  }
+
+  /* login (email: any, password: any): Observable<any>
   {
     const url = `${this.baseUrl}.json?orderBy="email"&equalTo=${email}&limitToFirst=1`;
 
@@ -68,12 +84,16 @@ export class FirebaseService {
   }*/
 
   //payments
-  addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
-    return this.http.put(`${this.baseUrl}/customers/${userId}/${paymentType}/${pay.id}.json`,pay);
-  }
-  
-  getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
-    return this.http.get<payment[]>(`${this.baseUrl}/customers/${userId}/${paymentType}.json`);
+  addPendingPaymentForUser(userId: string, pay: payment, paymentType: string) {
+    return this.http.put(
+      `${this.baseUrl}/customers/${userId}/${paymentType}/${pay.id}.json`,
+      pay
+    );
   }
 
+  getAllPayments(userId: string, paymentType: string): Observable<payment[]> {
+    return this.http.get<payment[]>(
+      `${this.baseUrl}/customers/${userId}/${paymentType}.json`
+    );
+  }
 }
