@@ -64,11 +64,21 @@ export class BillingService {
     return this.addNewPendingPayment(userID, pay, billType);
   }
 
-  //  due date
+  //  due date adds month
   calcDueDate(enteredDate: string) {
     const enteredDateObj = new Date(enteredDate);
     const dueDateObj = new Date(
       enteredDateObj.setMonth(enteredDateObj.getMonth() + 1)
+    );
+
+    return dueDateObj;
+  }
+
+  // due date adds a day
+  calcDueDatePrePaid(enteredDate: string) {
+    const enteredDateObj = new Date(enteredDate);
+    const dueDateObj = new Date(
+      enteredDateObj.setMonth(enteredDateObj.getDay() + 1)
     );
 
     return dueDateObj;
@@ -84,6 +94,4 @@ export class BillingService {
     }
     return extraFees;
   }
-
-  //compareDates()
 }

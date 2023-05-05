@@ -27,7 +27,7 @@
                   <div class="col-auto">
                     <input
                       type="text"
-
+                      [(ngModel)]="enteredUnits"
                       placeholder="number of units"
                       class="form-control"
                       maxLength="10"
@@ -41,7 +41,8 @@
                       id="dueDate"
                       name="dueDate"
                       class="form-control"
-
+                      [(ngModel)]="enteredDate"
+                      [max]="maxDate"
                     />
                   </div>
                   <!--Insert var here-->
@@ -49,7 +50,7 @@
                     <button
                       class="new-btn-style"
                       type="button"
-
+                      (click)="addPayment()"
                     >
                       Save
                     </button>
@@ -64,38 +65,38 @@
   </div>
 </div>
 
-
 <section class="how_section layout_padding">
   <div class="heading_container">
-    <h2>
-      See some offers
-    </h2>
+    <h2>See some offers</h2>
   </div>
-  <div class="how_container" style=" display: flex;  flex-wrap: wrap;">
-    <div class="box" >
+  <div class="how_container" style="display: flex; flex-wrap: wrap">
+    <div class="box">
       <div *ngFor="let service of services1" class="box">
         <div class="img-box">
           <div class="detail-box">
-            <h5 >{{ service?.name }}</h5>
+            <h5>{{ service?.name }}</h5>
             <p>{{ service?.description }}</p>
-            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+            <p style="font-weight: bold">
+              You're gonna pay: {{ service?.rate }} EGP
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="box" >
+    <div class="box">
       <div *ngFor="let service of services2" class="box">
         <div class="img-box">
           <div class="detail-box">
             <h5>{{ service?.name }}</h5>
             <p>{{ service?.description }}</p>
-            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+            <p style="font-weight: bold">
+              You're gonna pay: {{ service?.rate }} EGP
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-    </div>
+  </div>
 </section>
 <div class="container">
   <div class="row">
@@ -121,18 +122,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container  >
+                  <ng-container *ngFor="let pay of pendingPayments; index as i">
                     <tr>
-                      <td></td>
-                      <td class="text-right"></td>
-                      <td class="text-center"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
+                      <td>{{ i + 1 }}</td>
+                      <td class="text-right">{{ pay.dueDate | dateFormat }}</td>
+                      <td class="text-center">{{ pay.unitsUsed }}</td>
+                      <td class="text-right">{{ pay.rate }}</td>
+                      <td class="text-right">{{ pay.totalAmount }} $</td>
+                      <td class="text-right">{{ pay.extraFee }} $</td>
                       <td class="text-right">
                         <button
                           class="new-btn-style"
-
+                          (click)="payPendingPayment(pay)"
                         >
                           PAY</button
                         ><!-- HYA DI EL POP HENAAAA ZAWDY BOOL-->

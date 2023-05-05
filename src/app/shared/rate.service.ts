@@ -7,10 +7,13 @@ export class RateService {
   constructor() {}
   elecRate: number = 9.5;
   waterRate: number = 8;
-  telRate: number = 88;
+  postPaidTelRate: number = 88;
+  prePaidTelRate: number = 88;
 
   elecExtraFeesRate: number = 0.2;
   waterExtraFeesRate: number = 0.3;
+  prePaidTelExtraFeesRate: number = 0.3;
+  postPaidTelExtraFeesRate: number = 0.3;
 
   elecBillType = 'elecBills';
   waterBillType = 'waterBills';
