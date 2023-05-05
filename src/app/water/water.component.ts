@@ -17,23 +17,23 @@ export class WaterComponent {
   pendingPayments:payment[]=[];
   totalAmount:number;
   enteredUnits:string;
-  
+
   rate:number;
   type:string;
-  
+
   userID:number;
-  
+
   constructor(private billing:BillingService, private userInfo:GlobalVariableService , private rateServ:RateService){
-  } 
+  }
   ngOnInit(): void {
-  
-    //this.userID=userInfo.UserId;  
+
+    //this.userID=userInfo.UserId;
     this.userID=1111;
 
     //gai mn el service
     this.rate =this.rateServ.waterRate;
     this.type=this.rateServ.waterBillType;
-   
+
     //update table
     this.getAllPayments();
   }
@@ -42,16 +42,16 @@ export class WaterComponent {
     window.alert('new reading saved')
     this.getAllPayments();
     this.getAllPayments();
-    
+
     //building payment
     let generatedPaymentId= uuidv4();
-    
+
     //calculate total(using service)
     let totalPaymentAmount =this.billing.calculatePaymentAmount(this.rate,parseInt(this.enteredUnits));
-    
+
     //building payment
     let newPayment=new payment(generatedPaymentId,parseInt(this.enteredUnits),totalPaymentAmount,false);
-    
+
     //save to firebase
     this.billing.addNewPendingPayment(this.userID.toString(),newPayment,this.type)
     .subscribe((response: any) => {
@@ -63,9 +63,9 @@ export class WaterComponent {
 
     //clearing enteredUnits
     this.enteredUnits = '';
-    
+
   }
- 
+
 
   payPendingPayment(pay :payment){
    // window.alert('payment done')
@@ -85,7 +85,7 @@ export class WaterComponent {
     .subscribe((payments) => {
       this.pendingPayments = this.getUnpaidBills(payments);
       return(payments);
-    }); 
+    });
   }
   getUnpaidBills(bills: payment[]): payment[] {
     return bills.filter((bill) => !bill.isPaid);

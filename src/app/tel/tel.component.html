@@ -1,4 +1,163 @@
 <app-navbar></app-navbar>
-<label>{{u}}</label>
-<label>{{i}}</label>
-<label>{{b}}</label>
+<div id="main">
+  <div class="container">
+    <div class="box">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="detail-box" style="align-items: center">
+            <div>
+              <br />
+              <br />
+              <br />
+              <h1 style="color: white">Telephone billing Section</h1>
+            </div>
+            <div
+              class="card"
+              style="border: 15px solid black; border-radius: 15px; width: 100%"
+            >
+              <div class="card-body">
+                <div class="col-auto">
+                  <h3>
+                    <span font-weight:bold
+                      >Enter number of used units and reading date:</span
+                    >
+                  </h3>
+                </div>
+                <div class="row">
+                  <div class="col-auto">
+                    <input
+                      type="text"
+
+                      placeholder="number of units"
+                      class="form-control"
+                      maxLength="10"
+                      size="20"
+                    />
+                  </div>
+                  <div>
+                    <label for="dueDate"></label>
+                    <input
+                      type="date"
+                      id="dueDate"
+                      name="dueDate"
+                      class="form-control"
+
+                    />
+                  </div>
+                  <!--Insert var here-->
+                  <div class="col-auto">
+                    <button
+                      class="new-btn-style"
+                      type="button"
+
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="how_section layout_padding">
+  <div class="heading_container">
+    <h2>
+      See some offers
+    </h2>
+  </div>
+  <div class="how_container" style=" display: flex;  flex-wrap: wrap;">
+    <div class="box" >
+      <div *ngFor="let service of services1" class="box">
+        <div class="img-box">
+          <div class="detail-box">
+            <h5 >{{ service?.name }}</h5>
+            <p>{{ service?.description }}</p>
+            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box" >
+      <div *ngFor="let service of services2" class="box">
+        <div class="img-box">
+          <div class="detail-box">
+            <h5>{{ service?.name }}</h5>
+            <p>{{ service?.description }}</p>
+            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+</section>
+<div class="container">
+  <div class="row">
+    <!-- BEGIN INVOICE -->
+    <div class="col-xs-12">
+      <div class="grid invoice">
+        <div class="grid-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 style="padding-top: 20px">
+                <strong>Pending Payments</strong>
+              </h3>
+              <table class="table table-striped">
+                <thead>
+                  <tr class="line">
+                    <td><strong>#</strong></td>
+                    <!--<td class="text-center"><strong>Month</strong></td>-->
+                    <td class="text-right"><strong>DUE DATE</strong></td>
+                    <td class="text-center"><strong>UNITS</strong></td>
+                    <td class="text-right"><strong>RATE</strong></td>
+                    <td class="text-right"><strong>SUBTOTAL</strong></td>
+                    <td class="text-right"><strong>EXTRA FEE</strong></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container  >
+                    <tr>
+                      <td></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-right">
+                        <button
+                          class="new-btn-style"
+
+                        >
+                          PAY</button
+                        ><!-- HYA DI EL POP HENAAAA ZAWDY BOOL-->
+                      </td>
+                      <!--payments array-->
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-auto">
+                  <button class="new-btn-style">Pay All</button>
+                </div>
+                <div class="col-auto">
+                  <button class="new-btn-style">View Payments History</button>
+                </div>
+                <div class="col-auto">
+                  <button class="new-btn-style">Policy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END INVOICE -->
+  </div>
+</div>

@@ -5,17 +5,20 @@ import { FirebaseService } from '../shared/firebase.service';
 import { Router } from '@angular/router';
 import { SPsignupComponent } from '../spsignup/spsignup.component';
 import { GlobalVariableService } from '../shared/global-variable.service';
+import { Observable,of } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit{
 
   myform!: FormGroup;
   isServiceProvider: boolean = false;
   nId: string="" ;
+  providerNames: string[] = [];
+  selectedProvider:any;
 
   constructor(private formBuilder: FormBuilder,private Db :FirebaseService, private router: Router,private gb: GlobalVariableService ) {
     this.myform = this.formBuilder.group({
@@ -36,8 +39,19 @@ export class SignupComponent {
         /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
       )]],
       type:  ['',[Validators.required,]],
+       sp:   ['',]
     });
   }
+  ngOnInit(): void {
+    this.Db.getServiceProviders().subscribe(
+      (providerNames) => {
+        this.providerNames = providerNames;
+        console.log(providerNames);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );  }
 
 
 
@@ -67,6 +81,7 @@ export class SignupComponent {
       address :this.myform.controls['address'].value,
       pnumber : this.myform.controls['pnumber'].value,
       telBillType: this.myform.controls['myRadio'].value,
+      telCompany : this.myform.controls['sp'].value,
     };
 
     const dataSP ={

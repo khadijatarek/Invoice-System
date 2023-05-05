@@ -11,5 +11,6 @@ export class GlobalVariableService {
   userType:any;
   signupId: any;
   custTelType : any;
+  custComName: any;
 
 }

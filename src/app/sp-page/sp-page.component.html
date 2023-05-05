@@ -1,1 +1,31 @@
 <app-navbar></app-navbar>
+
+<div class="add-services">
+  <label for="numServices">Number of services:</label>
+  <input type="number" id="numServices" name="numServices" [(ngModel)]="numServices" (change)="generateTable()" style="width: 500px; border-radius: 25px;">
+
+  <table *ngIf="tableData">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Rate</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData">
+        <td><input type="text" [(ngModel)]="row.id"></td>
+        <td><input type="text" [(ngModel)]="row.name"></td>
+        <td><input type="text" [(ngModel)]="row.description"></td>
+        <td><input type="text" [(ngModel)]="row.type"></td>
+        <td><input type="number" [(ngModel)]="row.rate"></td>
+        <td><button (click)="deleteRow(row)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="saveServices()">Save</button>
+</div>

@@ -1,23 +1,23 @@
 
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-        <h3>Invoice Billing</h3>
+  <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+      <h3>Invoice Billing</h3>
 
-        <label for="username">National ID</label>
-        <input formControlName="nID" type="text" placeholder="National ID" id="nid">
+      <label for="username">National ID</label>
+      <input formControlName="nID" type="text" placeholder="National ID" id="nid">
 
-        <label for="password">Password</label>
-        <input  formControlName="password" type="password" placeholder="Password" id="password">
+      <label for="password">Password</label>
+      <input  formControlName="password" type="password" placeholder="Password" id="password">
 
-        <p *ngIf="showErrorMessage" style="margin-left: 35px;margin-top: 5px; color: red;">Invalid national ID or password</p>
+      <p *ngIf="showErrorMessage" style="margin-left: 35px;margin-top: 5px; color: red;">Invalid national ID or password</p>
 
 
-        <button type="submit"  >Log In</button>
+      <button type="submit"  >Log In</button>
 
-        <label>Don't have an account?<a routerLink="/signup" style="color: #1845ad;"> Sign up now</a></label>
-    </form>
+      <label>Don't have an account?<a routerLink="/signup" style="color: #1845ad;"> Sign up now</a></label>
+  </form>
 </body>

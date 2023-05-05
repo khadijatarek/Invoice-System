@@ -45,7 +45,7 @@
             </label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio"  id="exampleRadiosInline2" value="PostPaid" formControlName="myRadio" >
+            <input class="form-check-input" type="radio"  id="exampleRadiosInline2" value="postPaid" formControlName="myRadio" >
             <label class="form-check-label" for="exampleRadiosInline2" style="padding-left: 30px;font-size: medium;">
               Post-Paid
             </label>
@@ -56,6 +56,10 @@
               None
             </label>
           </div>
+          <select id="service-providers" formControlName="sp" >
+            <option value="">--Select a telephone company--</option>
+            <option *ngFor="let provider of providerNames" [value]="provider">{{ provider }}</option>
+          </select>
           <div class="col-md-12"><label class="labels">Password<span style="color:red">*</span></label><input formControlName="pass1" type="text"  placeholder="enter password"></div>
           <div class="col-md-12"><label class="labels">Confirm password<span style="color:red">*</span></label><input formControlName="pass2" type="text"  placeholder="enter password again"></div>
    <!--  <div class="col-md-12"><label class="labels">Sign up as<span style="color:red">*</span></label><input formControlName="type" type="text"  placeholder="user,admin or service provider" (input)="onTypeChange()"></div> -->
