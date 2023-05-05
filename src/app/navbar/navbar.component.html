@@ -1,9 +1,14 @@
 <div class="topnav">
-  <a  routerLink="/home">Home</a>
-  <a  *ngIf="isAdmin()==false && isSp()==false" routerLink="/elec">Electrictiy</a>
-  <a  *ngIf="isAdmin()==false && isSp()==false" routerLink="/water">Water</a>
-  <a  *ngIf="isAdmin()==false && isSp()==false" routerLink= "/tel">Telephone</a>
+  <a routerLink="/home">Home</a>
+  <a *ngIf="isAdmin() == false && isSp() == false" routerLink="/elec"
+    >Electrictiy</a
+  >
+  <a *ngIf="isAdmin() == false && isSp() == false" routerLink="/water">Water</a>
+  <a *ngIf="isAdmin() == false && isSp() == false" routerLink="/tel"
+    >Telephone</a
+  >
   <a routerLink="/profile">Profile</a>
+  <a routerLink="/paymentHistory">Payment History</a>
   <a routerLink="/login">Log Out</a>
   <a *ngIf="isAdmin()" routerLink="/admin">update</a>
   <a *ngIf="isSp()" routerLink="/sp">Add Service</a>

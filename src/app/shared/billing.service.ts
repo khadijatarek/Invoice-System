@@ -6,46 +6,84 @@ import { Observable } from 'rxjs';
 import { user } from '@angular/fire/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BillingService {
-  constructor(private db:FirebaseService) {
-
-  }
-  calculatePaymentAmount(rate:number,units:number){
-    return rate*units;
+  constructor(private db: FirebaseService) {}
+  calculatePaymentAmount(rate: number, units: number) {
+    return rate * units;
   }
 
   //add payment
-  addNewPendingPayment(userID:string,pay:payment,billType:string){
-    return this.db.addPendingPaymentForUser(userID,pay,billType);
+  addNewPendingPayment(userID: string, pay: payment, billType: string) {
+    return this.db.addPendingPaymentForUser(userID, pay, billType);
   }
 
-  getPayments(userID:string,billType:string){
-    return this.db.getAllPayments(userID,billType).pipe(
-      map(response => {
+  getPayments(userID: string, billType: string) {
+    return this.db.getAllPayments(userID, billType).pipe(
+      map((response) => {
         const pay = [];
         for (const key in response) {
           if (response.hasOwnProperty(key)) {
-            pay.push(new payment(key,
-              //response[key].dueDate,
-              response[key].unitsUsed, response[key].totalAmount, response[key].isPaid)
+            let res: payment = new payment(
+              key,
+              response[key].unitsUsed,
+              response[key].totalAmount,
+              response[key].isPaid
             );
+            res.dueDate = response[key].dueDate;
+            res.extraFee = response[key].extraFee;
+            res.rate = response[key].rate;
+            res.paymentDay = response[key].paymentDay;
+
+            pay.push(
+              /* new payment(
+                key,
+                //response[key].dueDate,
+                response[key].unitsUsed,
+                response[key].totalAmount,
+                response[key].isPaid
+              )
+            );*/
+              res
+            );
+
+            console.log(response);
+            console.log(res);
           }
         }
         return pay;
-      }));
+      })
+    );
   }
 
   //pay specific
-  
-  payPayment(userID:string,pay:payment,billType:string){
+  payPayment(userID: string, pay: payment, billType: string) {
     //put in firebase
-    pay.isPaid=true;
-    return this.addNewPendingPayment(userID,pay,billType);    
+    pay.isPaid = true;
+    return this.addNewPendingPayment(userID, pay, billType);
   }
-  
-  //pay all
- 
-  
+
+  //  due date
+  calcDueDate(enteredDate: string) {
+    const enteredDateObj = new Date(enteredDate);
+    const dueDateObj = new Date(
+      enteredDateObj.setMonth(enteredDateObj.getMonth() + 1)
+    );
+
+    return dueDateObj;
+  }
+
+  addExtraFees(dueDate: Date, billAmount: number, extraFeesRate: number) {
+    const now = new Date();
+    let extraFees: number;
+    if (dueDate < now) {
+      extraFees = billAmount * extraFeesRate;
+    } else {
+      extraFees = 0;
+    }
+    return extraFees;
+  }
+
+  //compareDates()
 }

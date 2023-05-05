@@ -11,15 +11,17 @@ import { ElecComponent } from './elec/elec.component';
 import { WaterComponent } from './water/water.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TelComponent } from './tel/tel.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {AngularFireModule} from '@angular/fire//compat';
+import { AngularFireModule } from '@angular/fire//compat';
 import { HttpClientModule } from '@angular/common/http';
 import { SPsignupComponent } from './spsignup/spsignup.component';
+import { DateFormatPipe } from './date-format.pipe';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SpPageComponent } from './sp-page/sp-page.component';
 
@@ -35,9 +37,11 @@ import { SpPageComponent } from './sp-page/sp-page.component';
     ProfileComponent,
     TelComponent,
     SPsignupComponent,
+    DateFormatPipe,
+    PaymentHistoryComponent,
     AdminPageComponent,
     SpPageComponent,
-    ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -48,10 +52,9 @@ import { SpPageComponent } from './sp-page/sp-page.component';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
-    HttpClientModule
-
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

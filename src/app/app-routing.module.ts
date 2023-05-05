@@ -9,25 +9,27 @@ import { ProfileComponent } from './profile/profile.component';
 import { WaterComponent } from './water/water.component';
 import { TelComponent } from './tel/tel.component';
 import { SPsignupComponent } from './spsignup/spsignup.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { SpPageComponent } from './sp-page/sp-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 
 const routes: Routes = [
-  {path:"home", component: HomeComponent},
-  {path:"signup", component: SignupComponent},
-  {path:"login", component:LoginComponent},
-  {path:"nav", component: NavbarComponent},
-  {path:"elec", component:ElecComponent},
-  {path:"water", component:WaterComponent},
-  {path:"profile", component:ProfileComponent},
-  {path:"tel" , component:TelComponent},
-  {path: "spsignup", component:SPsignupComponent},
-  {path: "admin", component:AdminPageComponent},
-  {path:"sp", component: SpPageComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'nav', component: NavbarComponent },
+  { path: 'elec', component: ElecComponent },
+  { path: 'water', component: WaterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'tel', component: TelComponent },
+  { path: 'spsignup', component: SPsignupComponent },
+  { path: 'paymentHistory', component: PaymentHistoryComponent },
+  { path: 'admin', component: AdminPageComponent },
+  { path: 'sp', component: SpPageComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
