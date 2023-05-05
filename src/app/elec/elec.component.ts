@@ -18,9 +18,9 @@ export class ElecComponent implements OnInit {
   totalAmount: number;
   enteredUnits: string;
 
-  rate: number;
+  //rate: number;
   type: string;
-  extraRate: number;
+  //extraRate: number;
 
   userID: number;
 
@@ -42,9 +42,9 @@ export class ElecComponent implements OnInit {
     this.userID = 1111;
 
     //gai mn el service
-    this.rate = this.rateServ.elecRate;
+    //this.rate = this.rateServ.elecRate;
     this.type = this.rateServ.elecBillType;
-    this.extraRate = this.rateServ.elecExtraFeesRate;
+    //this.extraRate = this.rateServ.elecExtraFeesRate;
 
     //update table
     this.getAllPayments();
@@ -61,7 +61,7 @@ export class ElecComponent implements OnInit {
 
       //calculate total(using service)
       let paymentAmount = this.billing.calculatePaymentAmount(
-        this.rate,
+        this.rateServ.elecRate,
         parseInt(this.enteredUnits)
       );
 
@@ -69,7 +69,7 @@ export class ElecComponent implements OnInit {
       let extraFee = this.billing.addExtraFees(
         this.dueDate,
         paymentAmount,
-        this.extraRate
+        this.rateServ.elecExtraFeesRate
       );
 
       //building payment
@@ -79,7 +79,7 @@ export class ElecComponent implements OnInit {
         paymentAmount,
         false
       );
-      newPayment.rate = this.rate;
+      newPayment.rate = this.rateServ.elecRate;
       newPayment.extraFee = extraFee;
       newPayment.dueDate = this.dueDate;
 

@@ -16,9 +16,9 @@ export class WaterComponent {
   totalAmount: number;
   enteredUnits: string;
 
-  rate: number;
+  //rate: number;
   type: string;
-  extraRate: number;
+  //extraRate: number;
 
   userID: number;
 
@@ -40,9 +40,9 @@ export class WaterComponent {
     this.userID = 1111;
 
     //gai mn el service
-    this.rate = this.rateServ.waterRate;
+    //this.rate = this.rateServ.waterRate;
     this.type = this.rateServ.waterBillType;
-    this.extraRate = this.rateServ.waterExtraFeesRate;
+    //this.extraRate = this.rateServ.waterExtraFeesRate;
     //update table
     this.getAllPayments();
   }
@@ -58,7 +58,7 @@ export class WaterComponent {
 
       //calculate total(using service)
       let paymentAmount = this.billing.calculatePaymentAmount(
-        this.rate,
+        this.rateServ.waterRate,
         parseInt(this.enteredUnits)
       );
 
@@ -66,7 +66,7 @@ export class WaterComponent {
       let extraFee = this.billing.addExtraFees(
         this.dueDate,
         paymentAmount,
-        this.extraRate
+        this.rateServ.waterExtraFeesRate
       );
 
       //building payment
@@ -76,7 +76,7 @@ export class WaterComponent {
         paymentAmount,
         false
       );
-      newPayment.rate = this.rate;
+      newPayment.rate = this.rateServ.waterRate;
       newPayment.extraFee = extraFee;
       newPayment.dueDate = this.dueDate;
 

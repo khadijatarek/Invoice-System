@@ -1,74 +1,76 @@
 <app-navbar></app-navbar>
-<div class="row">
-  <div class="container">
-    <div class="box">
-      <h2>Electricity Rate</h2>
-      <p>
-        Current rate: <span id="electricityRate">{{ electricityRate }}</span>
-      </p>
-      <div class="mt-3 mb-1">
-        <input
-          type="text"
-          id="newelectricityRate"
-          placeholder="Enter new rate"
-          class="form-control"
-          [(ngModel)]="enteredElecRate"
-        />
+<div>
+  <div class="row">
+    <div class="container">
+      <div class="box">
+        <h2>Electricity Rate</h2>
+        <p>
+          Current rate: <span id="electricityRate">{{ electricityRate }}</span>
+        </p>
+        <div class="mt-3 mb-1">
+          <input
+            type="text"
+            id="newelectricityRate"
+            placeholder="Enter new rate"
+            class="form-control"
+            [(ngModel)]="enteredElecRate"
+          />
+        </div>
+        <button (click)="changeElecRate()">Save</button>
       </div>
-      <button (click)="changeElecRate()">Save</button>
-    </div>
-    <div class="box">
-      <h2>Electricity Extra Fees Rate</h2>
-      <p>
-        Current rate:
-        <span id="electricityExtraRate">{{ electricityExtraRate }}</span>
-      </p>
-      <div class="mt-3 mb-1">
-        <input
-          type="text"
-          id="newelectricityExtraRate"
-          placeholder="Enter new rate"
-          class="form-control"
-          [(ngModel)]="enteredElecExtraRate"
-        />
+      <div class="box">
+        <h2>Electricity Extra Fees Rate</h2>
+        <p>
+          Current rate:
+          <span id="electricityExtraRate">{{ electricityExtraRate }}</span>
+        </p>
+        <div class="mt-3 mb-1">
+          <input
+            type="text"
+            id="newelectricityExtraRate"
+            placeholder="Enter new rate"
+            class="form-control"
+            [(ngModel)]="enteredElecExtraRate"
+          />
+        </div>
+        <button (click)="changeElecExtraRate()">Save</button>
       </div>
-      <button (click)="changeElecExtraRate()">Save</button>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="container">
-    <div class="box">
-      <h2>Water Rate</h2>
-      <p>
-        Current rate: <span id="waterRate">{{ waterRate }}</span>
-      </p>
-      <div class="mt-3 mb-1">
-        <input
-          type="text"
-          id="newWaterRate"
-          placeholder="Enter new rate"
-          class="form-control"
-          [(ngModel)]="enteredWaterRate"
-        />
+  <div class="row">
+    <div class="container">
+      <div class="box">
+        <h2>Water Rate</h2>
+        <p>
+          Current rate: <span id="waterRate">{{ waterRate }}</span>
+        </p>
+        <div class="mt-3 mb-1">
+          <input
+            type="text"
+            id="newWaterRate"
+            placeholder="Enter new rate"
+            class="form-control"
+            [(ngModel)]="enteredWaterRate"
+          />
+        </div>
+        <button (click)="changeWaterRate()">Save</button>
       </div>
-      <button (click)="changeWaterRate()">Save</button>
-    </div>
-    <div class="box">
-      <h2>Water Extra Fees Rate</h2>
-      <p>
-        Current rate: <span id="waterExtraRate">{{ waterExtraRate }}</span>
-      </p>
-      <div class="mt-3 mb-1">
-        <input
-          type="text"
-          id="newwaterExtraRate"
-          placeholder="Enter new rate"
-          class="form-control"
-          [(ngModel)]="enteredWaterExtraRate"
-        />
+      <div class="box">
+        <h2>Water Extra Fees Rate</h2>
+        <p>
+          Current rate: <span id="waterExtraRate">{{ waterExtraRate }}</span>
+        </p>
+        <div class="mt-3 mb-1">
+          <input
+            type="text"
+            id="newwaterExtraRate"
+            placeholder="Enter new rate"
+            class="form-control"
+            [(ngModel)]="enteredWaterExtraRate"
+          />
+        </div>
+        <button (click)="changeWaterExtraRate()">Save</button>
       </div>
-      <button (click)="changeWaterExtraRate()">Save</button>
     </div>
   </div>
 </div>

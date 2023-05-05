@@ -133,4 +133,13 @@ export class FirebaseService {
       `${this.baseUrl}/customer/${userId}/${paymentType}.json`
     );
   }
+
+  //rates
+  addRates(rateType: string, rateValue: number) {
+    return this.http.put(`${this.baseUrl}/rates/${rateType}.json`, rateValue);
+  }
+
+  getRates(rateType: string): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/rates/${rateType}.json`);
+  }
 }

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RateService {
-  constructor() {}
+  constructor(private db: FirebaseService) {}
   /*elecRate: number = 9.5;
   waterRate: number = 8;
   postPaidTelRate: number = 88;
@@ -19,15 +20,69 @@ export class RateService {
   waterBillType = 'waterBills';
   telBillType = 'telBills';
 
-  private _elecRate: number = 9.5;
-  private _waterRate: number = 8;
+  private _elecRate: number; //= 9.5;
+  private _waterRate: number; //= 8;
   private _postPaidTelRate: number = 88;
   private _prePaidTelRate: number = 88;
 
-  private _elecExtraFeesRate: number = 0.2;
-  private _waterExtraFeesRate: number = 0.3;
+  private _elecExtraFeesRate: number; // = 0.2;
+  private _waterExtraFeesRate: number; //= 0.3;
   private _prePaidTelExtraFeesRate: number = 0.3;
   private _postPaidTelExtraFeesRate: number = 0.3;
+
+  saveRateToFireBase(rateType: string, rateValue) {
+    return this.db.addRates(rateType, rateValue);
+  }
+  getRateFromFireBase(rateType: string) {
+    return this.db.getRates(rateType);
+  }
+
+  loadDataFromFirebase() {
+    this.getRateFromFireBase('elecRate').subscribe((number) => {
+      this.elecRate = number;
+    });
+    this.getRateFromFireBase('elecExtraFeesRate').subscribe((number) => {
+      this.elecExtraFeesRate = number;
+    });
+    this.getRateFromFireBase('waterRate').subscribe((number) => {
+      this.waterRate = number;
+    });
+    this.getRateFromFireBase('waterExtraFeesRate').subscribe((number) => {
+      this.waterExtraFeesRate = number;
+    });
+  }
+
+  saveToFireBase() {
+    //update water extra
+    this.saveRateToFireBase('elecRate', this.elecRate).subscribe(
+      (response: any) => {
+        console.log('Data added to Firebase Realtime Database:', response);
+      }
+    );
+    //update elec extra
+    this.saveRateToFireBase(
+      'elecExtraFeesRate',
+      this.elecExtraFeesRate
+    ).subscribe((response: any) => {
+      console.log('Data added to Firebase Realtime Database:', response);
+    });
+
+    //update water
+    this.saveRateToFireBase('waterRate', this.waterRate).subscribe(
+      (response: any) => {
+        console.log('Data added to Firebase Realtime Database:', response);
+      }
+    );
+
+    //update water extra
+    this.saveRateToFireBase(
+      'waterExtraFeesRate',
+      this.waterExtraFeesRate
+    ).subscribe((response: any) => {
+      console.log('Data added to Firebase Realtime Database:', response);
+    });
+  }
+  ///////////////////////////////////////////////
 
   get elecRate(): number {
     return this._elecRate;

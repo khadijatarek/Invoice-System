@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { RateService } from './shared/rate.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'UI';
-  username= "example@gmail.com";;
+  username = 'example@gmail.com';
 
-  constructor() {
+  constructor(private rateServ: RateService) {
     this.username = localStorage.getItem('username');
+  }
+  ngOnInit(): void {
+    this.rateServ.loadDataFromFirebase();
   }
 }
