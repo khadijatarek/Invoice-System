@@ -97,10 +97,33 @@ export class FirebaseService {
       );
   }
 
+  getServices(providerId: string): Observable<any[]> {
+    const url = `https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/${providerId}/services/prePaid/.json`;
+    return this.http
+      .get<any[]>(url)
+      .pipe(map((data) => Object.values(data).slice(1)));
+  }
+
+  private serviceProvidersUrl =
+    'https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/.json';
+
+  getServiceProviders(): Observable<string[]> {
+    return this.http.get<any[]>(this.serviceProvidersUrl).pipe(
+      map((serviceProviders) => {
+        // Extract the names of all service providers
+        const providerNames = [];
+        for (const key in serviceProviders) {
+          providerNames.push(serviceProviders[key].fname);
+        }
+        return providerNames;
+      })
+    );
+  }
+
   //payments
   addPendingPaymentForUser(userId: string, pay: payment, paymentType: string) {
     return this.http.put(
-      `${this.baseUrl}/customers/${userId}/${paymentType}/${pay.id}.json`,
+      `${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,
       pay
     );
   }
