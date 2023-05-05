@@ -29,7 +29,6 @@ export class TelComponent implements OnInit {
   maxDate: string;
 
   // just for telephone:
-  //serviceType: string = 'prePaid'; //prePaid or postPaid
   serviceType: string = 'postPaid'; //prePaid or postPaid
   //serviceType: string=''; //prePaid or postPaid
 
