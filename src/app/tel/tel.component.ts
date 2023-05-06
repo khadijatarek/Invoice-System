@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalVariableService } from '../shared/global-variable.service';
 import { FirebaseService } from '../shared/firebase.service';
 import { payment } from '../models/payment';
 import { BillingService } from '../shared/billing.service';
 import { RateService } from '../shared/rate.service';
 import { v4 as uuidv4 } from 'uuid';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tel',
@@ -13,6 +13,8 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./tel.component.scss'],
 })
 export class TelComponent implements OnInit {
+  @ViewChild('myForm') myForm: NgForm;
+
   pendingPayments: payment[] = [];
   totalAmount: number;
   enteredUnits: string;
@@ -76,7 +78,7 @@ export class TelComponent implements OnInit {
   }
 
   addPayment() {
-    if (this.enteredUnits != '') {
+    if (this.myForm.valid) {
       window.alert(`new reading saved date:${this.enteredDate}`);
       this.getAllPayments();
       this.getAllPayments();
@@ -121,6 +123,8 @@ export class TelComponent implements OnInit {
       //clearing enteredUnits
       this.enteredUnits = '';
       this.enteredDate = '';
+    } else {
+      window.alert(`enter data`);
     }
   }
 

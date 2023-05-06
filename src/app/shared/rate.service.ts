@@ -5,7 +5,9 @@ import { FirebaseService } from './firebase.service';
   providedIn: 'root',
 })
 export class RateService {
-  constructor(private db: FirebaseService) {}
+  constructor(private db: FirebaseService) {
+    this.loadDataFromFirebase();
+  }
   /*elecRate: number = 9.5;
   waterRate: number = 8;
   postPaidTelRate: number = 88;

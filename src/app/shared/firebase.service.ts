@@ -50,6 +50,10 @@ export class FirebaseService {
     );
   }
 
+  getUser(UserID: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customer/${UserID}.json`);
+  }
+
   //this.gb.custTelType = this.http.get(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${nationalID}/telBillType/.json`);
 
   authenticate(nationalID: string, password: string): Observable<string> {

@@ -11,62 +11,69 @@
                 <br />
                 <br />
                 <br />
-                <h1 style="padding-top: 20px">Payment History</h1>
               </div>
             </div>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <div class="row">
-          <div class="col-auto">
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio1"
-                value="elecBills"
-                [(ngModel)]="selectedOption"
-                (change)="getAllPayments('elecBills')"
-                checked
-              />
-              <label class="form-check-label" for="inlineRadio2"
-                >Electricity Payments</label
-              >
+
+        <div
+          class="card"
+          style="border: 15px solid black; border-radius: 25px; width: 100%"
+        >
+          <h1 style="padding-top: 20px">Payment History</h1>
+          <br />
+          <div class="card-body">
+            <div class="col-auto">
+              <h3>
+                <span font-weight:bold
+                  >Enter number of used units and reading date:</span
+                >
+              </h3>
             </div>
-          </div>
-          <div class="col-auto">
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio2"
-                value="waterBills"
-                [(ngModel)]="selectedOption"
-                (change)="getAllPayments('waterBills')"
-              />
-              <label class="form-check-label" for="inlineRadio3"
-                >Water Payments</label
-              >
-            </div>
-          </div>
-          <div class="col-auto">
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio3"
-                value="telBills"
-                [(ngModel)]="selectedOption"
-                (change)="getAllPayments('telBills')"
-              />
-              <label class="form-check-label" for="inlineRadio3"
-                >Telephone Payments</label
-              >
+            <div class="row">
+              <div class="col-auto">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="elecBills"
+                    [(ngModel)]="selectedOption"
+                    (change)="getAllPayments('elecBills')"
+                    checked
+                  />
+                  <label class="form-check-label" for="inlineRadio2"
+                    >Electricity Payments</label
+                  >
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="waterBills"
+                    [(ngModel)]="selectedOption"
+                    (change)="getAllPayments('waterBills')"
+                  />
+                  <label class="form-check-label" for="inlineRadio3"
+                    >Water Payments</label
+                  >
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="telBills"
+                    [(ngModel)]="selectedOption"
+                    (change)="getAllPayments('telBills')"
+                  />
+                  <label class="form-check-label" for="inlineRadio3"
+                    >Telephone Payments</label
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -94,13 +101,17 @@
               </tr>
             </thead>
             <tbody>
+              <tr class="text-center" *ngIf="payments.length < 1">
+                <td colspan="8">No Payments Yet</td>
+              </tr>
               <ng-container *ngFor="let pay of payments; index as i">
                 <tr>
                   <td>{{ i + 1 }}</td>
                   <td class="text-center">{{ pay.unitsUsed }}</td>
                   <td class="text-right">{{ pay.rate }}</td>
                   <td class="text-right">{{ pay.totalAmount }}</td>
-                  <td class="text-right">{{ pay.isPaid }}</td>
+                  <td class="text-right" *ngIf="!pay.isPaid">Pending</td>
+                  <td class="text-right" *ngIf="pay.isPaid">Paid</td>
 
                   <!--payments array-->
                 </tr>
@@ -112,3 +123,5 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

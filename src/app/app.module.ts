@@ -24,6 +24,7 @@ import { DateFormatPipe } from './date-format.pipe';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SpPageComponent } from './sp-page/sp-page.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SpPageComponent } from './sp-page/sp-page.component';
     PaymentHistoryComponent,
     AdminPageComponent,
     SpPageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

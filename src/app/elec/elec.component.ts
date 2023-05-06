@@ -1,12 +1,10 @@
-import { DatePipe, formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { payment } from '../models/payment';
 import { v4 as uuidv4 } from 'uuid';
 import { BillingService } from '../shared/billing.service';
 import { GlobalVariableService } from '../shared/global-variable.service';
 import { RateService } from '../shared/rate.service';
-import { DateFormatPipe } from '../date-format.pipe';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-elec',
@@ -14,6 +12,8 @@ import { DateFormatPipe } from '../date-format.pipe';
   styleUrls: ['./elec.component.scss'],
 })
 export class ElecComponent implements OnInit {
+  @ViewChild('myForm') myForm: NgForm;
+
   pendingPayments: payment[] = [];
   totalAmount: number;
   enteredUnits: string;
@@ -40,19 +40,15 @@ export class ElecComponent implements OnInit {
   ngOnInit(): void {
     //this.userID=userInfo.UserId;
     this.userID = 1111;
-
-    //gai mn el service
-    //this.rate = this.rateServ.elecRate;
     this.type = this.rateServ.elecBillType;
-    //this.extraRate = this.rateServ.elecExtraFeesRate;
 
     //update table
     this.getAllPayments();
   }
 
   addPayment() {
-    if (this.enteredUnits != '') {
-      window.alert(`new reading saved date:${this.enteredDate}`);
+    if (this.myForm.valid) {
+      window.alert(`new reading saved`);
       this.getAllPayments();
       this.getAllPayments();
       this.calculateDueDate();
@@ -96,6 +92,8 @@ export class ElecComponent implements OnInit {
       //clearing enteredUnits
       this.enteredUnits = '';
       this.enteredDate = '';
+    } else {
+      window.alert(`enter data`);
     }
   }
 
