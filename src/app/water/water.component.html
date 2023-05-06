@@ -8,8 +8,60 @@
             <div>
               <br />
               <br />
-              <br />
-              <h1 style="color: white">water billing Section</h1>
+              <h1 style="color: white">Water billing Section</h1>
+            </div>
+            <div
+              class="card"
+              style="border: 15px solid black; border-radius: 25px; width: 100%"
+            >
+              <div class="card-body">
+                <div class="col-auto">
+                  <h3>
+                    <span font-weight:bold
+                      >Enter number of used units and reading date:</span
+                    >
+                  </h3>
+                </div>
+                <form #myForm="ngForm">
+                  <div class="row">
+                    <div class="col-auto">
+                      <input
+                        type="text"
+                        name="enteredUnits"
+                        [(ngModel)]="enteredUnits"
+                        placeholder="number of units"
+                        class="form-control"
+                        maxLength="10"
+                        size="20"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label for="dueDate"></label>
+                      <input
+                        type="date"
+                        id="dueDate"
+                        name="enteredDate"
+                        class="form-control"
+                        [(ngModel)]="enteredDate"
+                        [max]="maxDate"
+                        required
+                      />
+                    </div>
+                    <div class="col-auto">
+                      <br />
+                      <button
+                        class="new-btn-style"
+                        type="submit"
+                        (click)="addPayment()"
+                        [disabled]="!myForm.valid"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -24,111 +76,56 @@
       <div class="grid invoice">
         <div class="grid-body">
           <div class="row">
-            <div class="col-6">
-              <div
-                class="card"
-                style="
-                  padding: 20px;
-                  border: #1845ad solid;
-                  border-radius: 25px;
-                "
-              >
-                <div class="card-body">
-                  <div class="col-auto">
-                    <h3>
-                      <span font-weight:bold>Enter number of used units:</span>
-                    </h3>
-                  </div>
-                  <div class="row">
-                    <div class="col-auto">
-                      <input
-                        type="text"
-                        [(ngModel)]="enteredUnits"
-                        placeholder="number of units"
-                        class="form-control"
-                        maxLength="10"
-                        size="20"
-                      />
-                    </div>
-                    <!--Insert var here-->
-                    <div class="col-auto">
-                      <button
-                        class="btn btn-primary mb-3"
-                        type="button"
-                        (click)="addPayment()"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-2"></div>
-            <div class="col-4">
-              <div class="img-box">
-                <img src="assets/electricity.png" width="150" height="150" />
-              </div>
-            </div>
-
-            <hr />
-          </div>
-          <div class="row">
             <div class="col-md-12">
-              <h3 style="padding-top: 20px">Pending Payments</h3>
+              <h3 style="padding-top: 20px">
+                <strong>Pending Payments</strong>
+              </h3>
               <table class="table table-striped">
                 <thead>
                   <tr class="line">
                     <td><strong>#</strong></td>
                     <!--<td class="text-center"><strong>Month</strong></td>-->
+                    <td class="text-right"><strong>DUE DATE</strong></td>
                     <td class="text-center"><strong>UNITS</strong></td>
                     <td class="text-right"><strong>RATE</strong></td>
                     <td class="text-right"><strong>SUBTOTAL</strong></td>
+                    <td class="text-right"><strong>EXTRA FEE</strong></td>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr class="text-center" *ngIf="pendingPayments.length < 1">
+                    <td colspan="8">No Water Pending Payments</td>
+                  </tr>
                   <ng-container *ngFor="let pay of pendingPayments; index as i">
                     <tr>
                       <td>{{ i + 1 }}</td>
+                      <td class="text-right">{{ pay.dueDate | dateFormat }}</td>
                       <td class="text-center">{{ pay.unitsUsed }}</td>
-                      <td class="text-right">{{ rate }}</td>
-                      <td class="text-right">{{ pay.totalAmount }}</td>
+                      <td class="text-right">{{ pay.rate }}</td>
+                      <td class="text-right">{{ pay.totalAmount }} $</td>
+                      <td class="text-right">{{ pay.extraFee }} $</td>
                       <td class="text-right">
                         <button
-                          class="btn btn-primary mb-3"
+                          class="new-btn-style"
                           (click)="payPendingPayment(pay)"
                         >
-                          PAY
-                        </button>
+                          PAY</button
+                        ><!-- HYA DI EL POP HENAAAA ZAWDY BOOL-->
                       </td>
                       <!--payments array-->
                     </tr>
                   </ng-container>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Total number of pending Payments</th>
-                    <th class="text-right">Total Amount</th>
-                    <th></th>
-                  </tr>
-                  <tr></tr>
-                </tfoot>
               </table>
               <div class="row">
                 <div class="col-auto">
-                  <div class="btn-box">
-                    <a href=""> Pay your bill </a>
-                  </div>
+                  <button
+                    class="new-btn-style"
+                    routerLink="/paymentHistory"
+                  ></button>
                 </div>
                 <div class="col-auto">
-                  <div class="btn-box">
-                    <a href=""> View Payment History </a>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="btn-box">
-                    <a href="">Policy </a>
-                  </div>
+                  <button class="new-btn-style">Policy</button>
                 </div>
               </div>
             </div>
@@ -139,3 +136,5 @@
     <!-- END INVOICE -->
   </div>
 </div>
+
+<app-footer></app-footer>

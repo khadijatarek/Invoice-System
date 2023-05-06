@@ -1,45 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators , FormControl, AbstractControl} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+  AbstractControl,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from '../shared/firebase.service';
 import { Router } from '@angular/router';
 import { SPsignupComponent } from '../spsignup/spsignup.component';
 import { GlobalVariableService } from '../shared/global-variable.service';
-import { Observable,of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit{
-
+export class SignupComponent implements OnInit {
   myform!: FormGroup;
   isServiceProvider: boolean = false;
-  nId: string="" ;
+  nId: string = '';
   providerNames: string[] = [];
-  selectedProvider:any;
+  selectedProvider: any;
 
-  constructor(private formBuilder: FormBuilder,private Db :FirebaseService, private router: Router,private gb: GlobalVariableService ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private Db: FirebaseService,
+    private router: Router,
+    private gb: GlobalVariableService
+  ) {
     this.myform = this.formBuilder.group({
-      fname : ['', [Validators.required]],
-      lname : ['', ],
-      pnumber : ['', [Validators.required,  Validators.minLength(11)]],
-      NationalID : ['', [Validators.required,  Validators.minLength(4)]],
-      address : ['', ],
-      country : ['', [Validators.required]],
-      postcode : ['', ],
-      gov : ['', [Validators.required]],
-      email: ['',[ Validators.email]],
+      fname: ['', [Validators.required]],
+      lname: [''],
+      pnumber: ['', [Validators.required, Validators.minLength(11)]],
+      NationalID: ['', [Validators.required, Validators.minLength(4)]],
+      address: [''],
+      country: ['', [Validators.required]],
+      postcode: [''],
+      gov: ['', [Validators.required]],
+      email: ['', [Validators.email]],
       myRadio: ['', Validators.required],
-      pass1: ['',[Validators.required, Validators.pattern(
-        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
-      )]],
-      pass2: ['',[Validators.required, Validators.pattern(
-        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
-      )]],
-      type:  ['',[Validators.required,]],
-       sp:   ['',]
+      pass1: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+          ),
+        ],
+      ],
+      pass2: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/
+          ),
+        ],
+      ],
+      type: ['', [Validators.required]],
+      sp: [''],
     });
   }
   ngOnInit(): void {
@@ -51,85 +73,74 @@ export class SignupComponent implements OnInit{
       (error) => {
         console.log(error);
       }
-    );  }
-
-
-
+    );
+  }
 
   onSubmit() {
-
-   // console.log(this.myform.get('myRadio').value);
-    this.gb.signupId=this.myform.controls['NationalID'].value;
+    // console.log(this.myform.get('myRadio').value);
+    this.gb.signupId = this.myform.controls['NationalID'].value;
 
     const dataAdmin = {
       email: this.myform.controls['email'].value,
       password: this.myform.controls['pass1'].value,
-      fname : this.myform.controls['fname'].value,
-      lname : this.myform.controls['lname'].value,
-      NationalID : this.myform.controls['NationalID'].value,
+      fname: this.myform.controls['fname'].value,
+      lname: this.myform.controls['lname'].value,
+      NationalID: this.myform.controls['NationalID'].value,
     };
 
     const dataCustomer = {
       email: this.myform.controls['email'].value,
-      NationalID : this.myform.controls['NationalID'].value,
-      fname : this.myform.controls['fname'].value,
-      lname : this.myform.controls['lname'].value,
+      NationalID: this.myform.controls['NationalID'].value,
+      fname: this.myform.controls['fname'].value,
+      lname: this.myform.controls['lname'].value,
       password: this.myform.controls['pass1'].value,
-      country :this.myform.controls['country'].value,
-      governerate:this.myform.controls['gov'].value,
-      postcode : this.myform.controls['postcode'].value,
-      address :this.myform.controls['address'].value,
-      pnumber : this.myform.controls['pnumber'].value,
+      country: this.myform.controls['country'].value,
+      governerate: this.myform.controls['gov'].value,
+      postcode: this.myform.controls['postcode'].value,
+      address: this.myform.controls['address'].value,
+      pnumber: this.myform.controls['pnumber'].value,
       telBillType: this.myform.controls['myRadio'].value,
-      telCompany : this.myform.controls['sp'].value,
+      telCompany: this.myform.controls['sp'].value,
     };
 
-    const dataSP ={
-      fname : this.myform.controls['fname'].value,
-      NationalID : this.myform.controls['NationalID'].value,
+    const dataSP = {
+      fname: this.myform.controls['fname'].value,
+      NationalID: this.myform.controls['NationalID'].value,
       password: this.myform.controls['pass1'].value,
     };
 
     console.log(this.myform.controls['type'].value);
 
-
-    if(this.myform.controls['type'].value == 'admin')
-    {
-      this.Db.AddAdmin(dataAdmin,this.myform.controls['NationalID'].value).subscribe(response => {
+    if (this.myform.controls['type'].value == 'admin') {
+      this.Db.AddAdmin(
+        dataAdmin,
+        this.myform.controls['NationalID'].value
+      ).subscribe((response) => {
         console.log('Data sent to backend API:', response);
-
       }),
-      (error:any) => console.log(`error is : $(error)`);
-      this.router.navigate(["/login"]);
-
-    }
-
-
-    else if(this.myform.controls['type'].value == 'user')
-    {
-      this.Db.AddCustomer(dataCustomer, this.myform.controls['NationalID'].value).subscribe((response: any) => {
+        (error: any) => console.log(`error is : $(error)`);
+      this.router.navigate(['/login']);
+    } else if (this.myform.controls['type'].value == 'user') {
+      this.Db.AddCustomer(
+        dataCustomer,
+        this.myform.controls['NationalID'].value
+      ).subscribe((response: any) => {
         console.log('Data added to Firebase Realtime Database:', response);
       });
-      this.router.navigate(["/login"]);
-
-    }
-
-
-    else if(this.myform.controls['type'].value == 'service provider')
-    {
+      this.router.navigate(['/login']);
+    } else if (this.myform.controls['type'].value == 'service provider') {
       this.gb.signupId = this.myform.controls['NationalID'].value;
-      this.isServiceProvider =true;
-      this.Db.AddSP(dataSP,this.myform.controls['NationalID'].value).subscribe((response: any) => {
-        console.log('Data added to Firebase Realtime Database:', response);
-      });
-  //    this.router.navigate(["/spsignup"]);
-  this.router.navigate(["/login"]);
+      this.isServiceProvider = true;
+      this.Db.AddSP(dataSP, this.myform.controls['NationalID'].value).subscribe(
+        (response: any) => {
+          console.log('Data added to Firebase Realtime Database:', response);
+        }
+      );
+      //    this.router.navigate(["/spsignup"]);
+      this.router.navigate(['/login']);
     }
-
   }
-
 }
-
 
 /*
   onTypeChange() {

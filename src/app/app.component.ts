@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'UI';
-  username= "example@gmail.com";;
+  username = 'example@gmail.com';
 
   constructor() {
     this.username = localStorage.getItem('username');

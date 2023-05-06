@@ -71,7 +71,9 @@
     <option value="service provider">Service Provider</option>
   </select>
       </div>
-      <div *ngIf="isServiceProvider==true"><app-spsignup [nId]?="nId"></app-spsignup></div>
+      <div *ngIf="isServiceProvider == true">
+        <app-spsignup [nId]?="nId"></app-spsignup>
+      </div>
       <div class="mt-5 text-center"><button type="submit">SignUp</button></div>
     </div>
   </form>

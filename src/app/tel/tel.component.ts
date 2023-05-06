@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalVariableService } from '../shared/global-variable.service';
 import { FirebaseService } from '../shared/firebase.service';
 import { payment } from '../models/payment';
 import { BillingService } from '../shared/billing.service';
 import { RateService } from '../shared/rate.service';
 import { v4 as uuidv4 } from 'uuid';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tel',
@@ -13,6 +13,8 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./tel.component.scss'],
 })
 export class TelComponent implements OnInit {
+  @ViewChild('myForm') myForm: NgForm;
+
   pendingPayments: payment[] = [];
   totalAmount: number;
   enteredUnits: string;
@@ -27,12 +29,6 @@ export class TelComponent implements OnInit {
   dueDate: Date;
 
   maxDate: string;
-
-  providerId = 'spID'; // Replace with the desired service provider ID
-  services1: any[] = [];
-  services2: any[] = [];
-
-  serviceNames: string[] = [];
 
   // just for telephone:
   serviceType: string = 'postPaid'; //prePaid or postPaid
@@ -49,6 +45,16 @@ export class TelComponent implements OnInit {
     this.maxDate = today.toISOString().substring(0, 10);
   }
 
+
+  providerId = 'spID'; // Replace with the desired service provider ID
+  services1: any[] = [];
+  services2: any[] = [];
+
+  serviceNames: string[] = [];
+
+
+
+
   //sp part msh 3arfa a3mlha feeha eh???
 
 
@@ -62,15 +68,14 @@ export class TelComponent implements OnInit {
       this.services2 = services;
       console.log(services);
     });
-
-   this.db.getServiceNamesByType( this.gb.custComName, this.gb.custTelType).subscribe((serviceNames: string[]) => {
+    this.db.getServiceNamesByType( this.gb.custComName, this.gb.custTelType).subscribe((serviceNames: string[]) => {
       this.serviceNames = serviceNames;
       console.log("Service names",serviceNames);
       console.log("CustTelType",<string>this.gb.custTelType);
     });
 
     //billing related
-    this.userID = 1111;
+    this.userID = this.userInfo.UserId;
 
     //gai mn el service
     this.type = this.rateServ.telBillType;
@@ -85,19 +90,8 @@ export class TelComponent implements OnInit {
     this.getAllPayments();
   }
 
- /* onServiceTypeSelected(serviceType: string) {
-   if (serviceType) {
-      this.db.getServiceNamesByType(serviceType).subscribe((serviceNames: string[]) => {
-        this.serviceNames = serviceNames;
-      });
-    } else {
-      this.serviceNames = [];
-    }
-  }
-*/
-
   addPayment() {
-    if (this.enteredUnits != '') {
+    if (this.myForm.valid) {
       window.alert(`new reading saved date:${this.enteredDate}`);
       this.getAllPayments();
       this.getAllPayments();
@@ -142,6 +136,8 @@ export class TelComponent implements OnInit {
       //clearing enteredUnits
       this.enteredUnits = '';
       this.enteredDate = '';
+    } else {
+      window.alert(`enter data`);
     }
   }
 
@@ -180,4 +176,5 @@ export class TelComponent implements OnInit {
       this.dueDate = this.billing.calcDueDate(this.enteredDate);
     }
   }
+
 }

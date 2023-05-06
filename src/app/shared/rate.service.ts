@@ -5,11 +5,14 @@ import { FirebaseService } from './firebase.service';
   providedIn: 'root',
 })
 export class RateService {
-  constructor(private db: FirebaseService) {}
+  constructor(private db: FirebaseService) {
+    this.loadDataFromFirebase();
+  }
   /*elecRate: number = 9.5;
   waterRate: number = 8;
   postPaidTelRate: number = 88;
   prePaidTelRate: number = 88;
+
   elecExtraFeesRate: number = 0.2;
   waterExtraFeesRate: number = 0.3;
   prePaidTelExtraFeesRate: number = 0.3;

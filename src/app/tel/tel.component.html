@@ -8,12 +8,11 @@
             <div>
               <br />
               <br />
-              <br />
               <h1 style="color: white">Telephone billing Section</h1>
             </div>
             <div
               class="card"
-              style="border: 15px solid black; border-radius: 15px; width: 100%"
+              style="border: 15px solid black; border-radius: 25px; width: 100%"
             >
               <div class="card-body">
                 <div class="col-auto">
@@ -23,17 +22,20 @@
                     >
                   </h3>
                 </div>
-                <div class="row">
-                  <div class="col-auto">
-                    <input
-                      type="text"
-
-                      placeholder="number of units"
-                      class="form-control"
-                      maxLength="10"
-                      size="20"
-                    />
-                  </div>
+                <form #myForm="ngForm">
+                  <div class="row">
+                    <div class="col-auto">
+                      <input
+                        type="text"
+                        name="enteredUnits"
+                        [(ngModel)]="enteredUnits"
+                        placeholder="number of units"
+                        class="form-control"
+                        maxLength="10"
+                        size="20"
+                        required
+                      />
+                    </div>
                   <div style="padding: 5px; width: 300px">
 
                     <select *ngIf="serviceNames.length">
@@ -42,28 +44,32 @@
                     </select>
 
                   </div>
-                  <div>
-                    <label for="dueDate"></label>
-                    <input
-                      type="date"
-                      id="dueDate"
-                      name="dueDate"
-                      class="form-control"
+                    <div>
+                      <label for="dueDate"></label>
+                      <input
+                        type="date"
+                        id="dueDate"
+                        name="enteredDate"
+                        class="form-control"
+                        [(ngModel)]="enteredDate"
+                        [max]="maxDate"
+                        required
+                      />
+                    </div>
 
-                    />
+                    <div class="col-auto">
+                      <br />
+                      <button
+                        class="new-btn-style"
+                        type="submit"
+                        (click)="addPayment()"
+                        [disabled]="!myForm.valid"                      style="margin-top:10px ;"
+                      >
+                        Save
+                      </button>
+                    </div>
                   </div>
-
-                  <!--Insert var here-->
-                  <div class="col-auto">
-                    <button
-                      class="new-btn-style"
-                      type="button"
-                      style="margin-top:10px ;"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -73,38 +79,38 @@
   </div>
 </div>
 
-
 <section class="how_section layout_padding">
   <div class="heading_container">
-    <h2>
-      See some offers
-    </h2>
+    <h2>See some offers</h2>
   </div>
-  <div class="how_container" style=" display: flex;  flex-wrap: wrap;">
-    <div class="box" >
+  <div class="how_container" style="display: flex; flex-wrap: wrap">
+    <div class="box">
       <div *ngFor="let service of services1" class="box">
         <div class="img-box">
           <div class="detail-box">
-            <h5 >{{ service?.name }}</h5>
+            <h5>{{ service?.name }}</h5>
             <p>{{ service?.description }}</p>
-            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+            <p style="font-weight: bold">
+              You're gonna pay: {{ service?.rate }} EGP
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="box" >
+    <div class="box">
       <div *ngFor="let service of services2" class="box">
         <div class="img-box">
           <div class="detail-box">
             <h5>{{ service?.name }}</h5>
             <p>{{ service?.description }}</p>
-            <p style="font-weight: bold;">You're gonna pay: {{ service?.rate }} EGP</p>
+            <p style="font-weight: bold">
+              You're gonna pay: {{ service?.rate }} EGP
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-    </div>
+  </div>
 </section>
 <div class="container">
   <div class="row">
@@ -123,25 +129,28 @@
                     <td><strong>#</strong></td>
                     <!--<td class="text-center"><strong>Month</strong></td>-->
                     <td class="text-right"><strong>DUE DATE</strong></td>
-                    <td class="text-center"><strong>UNITS</strong></td>
+                    <td class="text-right"><strong>UNITS</strong></td>
                     <td class="text-right"><strong>RATE</strong></td>
                     <td class="text-right"><strong>SUBTOTAL</strong></td>
                     <td class="text-right"><strong>EXTRA FEE</strong></td>
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container  >
+                  <tr class="text-center" *ngIf="pendingPayments.length < 1">
+                    <td colspan="8">No Telephone Pending Payments</td>
+                  </tr>
+                  <ng-container *ngFor="let pay of pendingPayments; index as i">
                     <tr>
-                      <td></td>
-                      <td class="text-right"></td>
-                      <td class="text-center"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
+                      <td>{{ i + 1 }}</td>
+                      <td class="text-right">{{ pay.dueDate | dateFormat }}</td>
+                      <td class="text-right">{{ pay.unitsUsed }}</td>
+                      <td class="text-right">{{ pay.rate }}</td>
+                      <td class="text-right">{{ pay.totalAmount }} $</td>
+                      <td class="text-right">{{ pay.extraFee }} $</td>
                       <td class="text-right">
                         <button
                           class="new-btn-style"
-
+                          (click)="payPendingPayment(pay)"
                         >
                           PAY</button
                         ><!-- HYA DI EL POP HENAAAA ZAWDY BOOL-->
@@ -153,10 +162,9 @@
               </table>
               <div class="row">
                 <div class="col-auto">
-                  <button class="new-btn-style">Pay All</button>
-                </div>
-                <div class="col-auto">
-                  <button class="new-btn-style">View Payments History</button>
+                  <button class="new-btn-style" routerLink="/paymentHistory">
+                    View Payments History
+                  </button>
                 </div>
                 <div class="col-auto">
                   <button class="new-btn-style">Policy</button>
@@ -170,3 +178,5 @@
     <!-- END INVOICE -->
   </div>
 </div>
+
+<app-footer></app-footer>

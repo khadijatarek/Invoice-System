@@ -3,9 +3,9 @@ body {
   background: #eee;
 }
 #main {
-  height: 500px;
+  height: 550px;
   width: 100%;
-  background-image: url("/assets/light.jpg");
+  background-image: url("/assets/phone.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
   align-items: center;
@@ -69,7 +69,6 @@ body {
       color: black;
       font-weight: 900;
 
-
       &::before {
         content: "";
         position: absolute;
@@ -88,161 +87,157 @@ body {
     }
   }
 
-    .how_container {
-      display: flex;
-      justify-content: center;
-      padding: 45px 60px;
-      flex-wrap: wrap;
+  .how_container {
+    display: flex;
+    justify-content: center;
+    padding: 45px 60px;
+    flex-wrap: wrap;
 
+    .box {
+      text-align: center;
+      margin: 10px;
+      min-width: 200px;
+      width: 355px;
 
+      .img-box {
+        display: flex;
+        justify-content: center;
+        height: 250px;
+        background-color: #f6f5f7;
+        border: 25px solid;
+        border-radius: 25px;
 
-      .box {
-        text-align: center;
-        margin: 10px;
-        min-width: 200px;
-        width: 355px;
+        svg {
+          width: 75px;
+          height: auto;
+        }
+      }
 
+      .detail-box {
+        margin-top: 15px;
 
+        h5 {
+          font-weight: bold;
+          position: relative;
+          color: black;
+
+          &::before {
+            display: none;
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 75px;
+            height: 2px;
+            background-color: #30ae69;
+            transform: translateX(-50%);
+          }
+        }
+
+        p {
+          color: black;
+        }
+      }
+
+      &:hover {
         .img-box {
-          display: flex;
-          justify-content: center;
-          height: 250px;
-          background-color: #f6f5f7;
-          border: 25px solid;
-           border-radius: 25px;
+          background-color: #688ada;
 
           svg {
-            width: 75px;
-            height: auto;
+            fill: white;
           }
         }
 
         .detail-box {
           margin-top: 15px;
 
-          h5 {
-            font-weight: bold;
-            position: relative;
-            color: black;
-
+          h2 {
             &::before {
-              display: none;
-              content: "";
-              position: absolute;
-              bottom: -4px;
-              left: 50%;
-              width: 75px;
-              height: 2px;
-              background-color:#30ae69;
-              transform: translateX(-50%);
+              display: block;
             }
           }
 
           p {
-            color: black;
-          }
-        }
-
-        &:hover {
-          .img-box {
-            background-color: #688ada;
-
-            svg {
-              fill: white;
-            }
-          }
-
-          .detail-box {
-            margin-top: 15px;
-
-            h2 {
-              &::before {
-                display: block;
-              }
-            }
-
-            p {
-              color: darkslategrey;
-            }
+            color: darkslategrey;
           }
         }
       }
     }
-
-    .btn-box {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 50px;
-
-      a {
-        @include hero_btn(#171717, white, 10px, 45px, 5px);
-      }
-    }
-  }
-  .invoice {
-    //  background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
-    //  background-repeat: no-repeat;
-    // background-size: 100%;
-
-    margin-top: 30px;
-    margin-bottom: 30px;
   }
 
-  .invoice h2 {
-    margin-top: 0px;
-    line-height: 0.8em;
-    color: black;
-  }
-
-  .invoice .small {
-    font-weight: 450;
-    color: #092157;
-  }
-
-  .invoice hr {
-    margin-top: 10px;
-    border-color: #ddd;
-  }
-
-  .invoice .table tr.line {
-    border-bottom: 1px solid #ccc;
-  }
-
-  .invoice .table td {
-    border: none;
-  }
-
-  .invoice .identity {
-    margin-top: 10px;
-    font-size: 1.1em;
-    font-weight: 300;
-  }
-
-  .invoice .identity strong {
-    font-weight: 600;
-  }
-
-  .grid {
-    // background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
-    // background-repeat: no-repeat;
-    // background-size: 100%;
-    position: relative;
-    width: 100%;
-    background: #fff;
-    // color: #666666;
-    border-radius: 2px;
-    margin-bottom: 25px;
-  }
   .btn-box {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-  a {
-    @include hero_btn(#171717, white, 10px, 45px, 25px);
-  }
+    margin-bottom: 50px;
 
+    a {
+      @include hero_btn(#171717, white, 10px, 45px, 5px);
+    }
+  }
+}
+.invoice {
+  //  background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
+  //  background-repeat: no-repeat;
+  // background-size: 100%;
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.invoice h2 {
+  margin-top: 0px;
+  line-height: 0.8em;
+  color: black;
+}
+
+.invoice .small {
+  font-weight: 450;
+  color: #092157;
+}
+
+.invoice hr {
+  margin-top: 10px;
+  border-color: #ddd;
+}
+
+.invoice .table tr.line {
+  border-bottom: 1px solid #ccc;
+}
+
+.invoice .table td {
+  border: none;
+}
+
+.invoice .identity {
+  margin-top: 10px;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.invoice .identity strong {
+  font-weight: 600;
+}
+
+.grid {
+  // background-image: url("https://c4.wallpaperflare.com/wallpaper/223/911/831/minimalism-orange-blue-blurred-wallpaper-preview.jpg");
+  // background-repeat: no-repeat;
+  // background-size: 100%;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  // color: #666666;
+  border-radius: 2px;
+  margin-bottom: 25px;
+}
+.btn-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+a {
+  @include hero_btn(#171717, white, 10px, 45px, 25px);
+}
 
 .new-btn-style {
   --bs-blue: #0d6efd;
