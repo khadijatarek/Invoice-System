@@ -36,11 +36,12 @@
                         required
                       />
                     </div>
+
                   <div style="padding: 5px; width: 300px">
 
-                    <select *ngIf="serviceNames.length">
+                    <select *ngIf="serviceNames.length"  [(ngModel)]="selectedServiceName" name="selectedServiceName">
                       <option value="">Select a package</option>
-                      <option *ngFor="let serviceName of serviceNames">{{ serviceName }}</option>
+                      <option *ngFor="let serviceName of serviceNames"  [value]="serviceName">{{ serviceName }}</option>
                     </select>
 
                   </div>

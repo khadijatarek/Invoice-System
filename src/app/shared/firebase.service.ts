@@ -6,6 +6,19 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { payment } from '../models/payment';
 import { GlobalVariableService } from './global-variable.service';
 
+interface ServiceProvider {
+  fname: string;
+  password: string;
+  services: {
+    [key: string]: {
+      [key: string]: {
+        name: string;
+        rate: number;
+      };
+    };
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -163,6 +176,42 @@ export class FirebaseService {
 
 
 
+  getServiceRate(fname: string, serviceType: string, serviceIDName: string): Observable<any | null> {
+    const url = `https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders.json`;
+    return this.http.get<any>(url).pipe(
+      map((data) => {
+        let rate:any | null = null;
+        for (const key in data) {
+          if (data.hasOwnProperty(key) && data[key].fname === fname) {
+            console.log('found fname', fname);
+            console.log('found key', key);
+            console.log('services', data[key].services);
+            console.log('serviceType', serviceType);
+            console.log('serviceIDName', serviceIDName);
+            const services = data[key].services;
+            if (services && services[serviceType]) {
+
+              const serviceTypeObj = services[serviceType];
+
+              Object.keys(serviceTypeObj).forEach((serviceId) => {
+                const service = serviceTypeObj[serviceId];
+                if ((service && service.id) ) {
+                  if(service.name = serviceIDName)
+                  {
+                   rate = service.rate;
+                  }
+                  console.log("rooate: ", rate);
+                }
+
+              });
+            }
+            break;
+          }
+        }
+        return rate;
+      })
+    );
+  }
 
   //payments
   addPendingPaymentForUser(userId: string, pay: payment, paymentType: string) {

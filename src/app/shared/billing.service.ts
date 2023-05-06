@@ -4,15 +4,31 @@ import { FirebaseService } from './firebase.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { user } from '@angular/fire/auth';
+import { GlobalVariableService } from './global-variable.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillingService {
-  constructor(private db: FirebaseService) {}
+  constructor(private db: FirebaseService, private gb: GlobalVariableService) {}
   calculatePaymentAmount(rate: number, units: number) {
     return rate * units;
   }
+
+
+  calculateTelPaymentAmount(rate: number, units: number) {
+
+    console.log("type:", this.gb.custTelType);
+    if(this.gb.custTelType == "prePaid")
+    {
+      return rate;
+    }
+    else
+    {
+      return rate * units;
+    }
+  }
+
 
   //add payment
   addNewPendingPayment(userID: string, pay: payment, billType: string) {
@@ -78,7 +94,7 @@ export class BillingService {
   calcDueDatePrePaid(enteredDate: string) {
     const enteredDateObj = new Date(enteredDate);
     const dueDateObj = new Date(
-      enteredDateObj.setMonth(enteredDateObj.getDay() + 1)
+      enteredDateObj.setDate(enteredDateObj.getDay() + 1)
     );
 
     return dueDateObj;

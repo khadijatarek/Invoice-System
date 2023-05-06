@@ -47,9 +47,9 @@ export class LoginComponent {
     console.log('company is:', this.gv.custComName);
 
     if(this.showErrorMessage == false)
-     {
+    {
       this.router.navigate(["/home"]);
-     }
+    }
 
     (error:any) => console.log(`error is : $(error)`);this.showErrorMessage = true;
 

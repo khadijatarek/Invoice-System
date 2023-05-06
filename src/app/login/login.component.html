@@ -16,7 +16,7 @@
       <p *ngIf="showErrorMessage" style="margin-left: 35px;margin-top: 5px; color: red;">Invalid national ID or password</p>
 
 
-      <button type="submit"  >Log In</button>
+      <button type="submit" [disabled]="myForm.invalid" >Log In</button>
 
       <label>Don't have an account?<a routerLink="/signup" style="color: #1845ad;"> Sign up now</a></label>
   </form>

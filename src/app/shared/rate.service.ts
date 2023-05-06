@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
+import { GlobalVariableService } from './global-variable.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RateService {
-  constructor(private db: FirebaseService) {
+  constructor(private db: FirebaseService, private gb:GlobalVariableService) {
     this.loadDataFromFirebase();
   }
   /*elecRate: number = 9.5;
@@ -20,12 +21,12 @@ export class RateService {
 */
   elecBillType = 'elecBills';
   waterBillType = 'waterBills';
-  telBillType = 'telBills';
+  telBillType = this.gb.custTelType;
 
   private _elecRate: number; //= 9.5;
   private _waterRate: number; //= 8;
-  private _postPaidTelRate: number = 88;
-  private _prePaidTelRate: number = 88;
+  private _postPaidTelRate: number = this.gb.custRate;
+  private _prePaidTelRate: number = this.gb.custRate;
 
   private _elecExtraFeesRate: number; // = 0.2;
   private _waterExtraFeesRate: number; //= 0.3;

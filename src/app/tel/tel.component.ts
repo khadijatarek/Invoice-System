@@ -29,10 +29,9 @@ export class TelComponent implements OnInit {
   dueDate: Date;
 
   maxDate: string;
-
   // just for telephone:
-  serviceType: string = 'postPaid'; //prePaid or postPaid
-  //serviceType: string=''; //prePaid or postPaid
+  serviceType: string = this.gb.custTelType; //prePaid or postPaid
+
 
   constructor(
     private gb: GlobalVariableService,
@@ -46,13 +45,13 @@ export class TelComponent implements OnInit {
   }
 
 
+
   providerId = 'spID'; // Replace with the desired service provider ID
   services1: any[] = [];
   services2: any[] = [];
 
   serviceNames: string[] = [];
-
-
+  selectedServiceName: string;
 
 
   //sp part msh 3arfa a3mlha feeha eh???
@@ -79,7 +78,7 @@ export class TelComponent implements OnInit {
 
     //gai mn el service
     this.type = this.rateServ.telBillType;
-    if (this.serviceType == 'prePaid') {
+    if (this.type == 'prePaid') {
       this.rate = this.rateServ.prePaidTelRate;
       this.extraRate = this.rateServ.prePaidTelExtraFeesRate;
     } else {
@@ -90,9 +89,14 @@ export class TelComponent implements OnInit {
     this.getAllPayments();
   }
 
-  addPayment() {
+ async addPayment() {
+
+    console.log("chosen: ", this.selectedServiceName);
+    this.gb.custRate= await this.db.getServiceRate(this.gb.custComName, this.gb.custTelType, this.selectedServiceName).toPromise();
+    console.log("rrrrrate: ", this.gb.custRate);
+
     if (this.myForm.valid) {
-      window.alert(`new reading saved date:${this.enteredDate}`);
+      window.alert(`new reading saved `);
       this.getAllPayments();
       this.getAllPayments();
       this.calculateDueDate();
@@ -100,8 +104,8 @@ export class TelComponent implements OnInit {
       let generatedPaymentId = uuidv4();
 
       //calculate total(using service)
-      let paymentAmount = this.billing.calculatePaymentAmount(
-        this.rate,
+      let paymentAmount = this.billing.calculateTelPaymentAmount(
+        this.gb.custRate,
         parseInt(this.enteredUnits)
       );
 
@@ -119,7 +123,7 @@ export class TelComponent implements OnInit {
         paymentAmount,
         false
       );
-      newPayment.rate = this.rate;
+      newPayment.rate = this.gb.custRate;  ////
       newPayment.extraFee = extraFee;
       newPayment.dueDate = this.dueDate;
 
@@ -170,9 +174,10 @@ export class TelComponent implements OnInit {
   }
 
   calculateDueDate() {
-    if (this.serviceType == 'prePaid') {
+
+    if (this.gb.custTelType == 'prePaid') {
       this.dueDate = this.billing.calcDueDatePrePaid(this.enteredDate);
-    } else {
+    } else if(this.gb.custTelType == 'postPaid') {
       this.dueDate = this.billing.calcDueDate(this.enteredDate);
     }
   }

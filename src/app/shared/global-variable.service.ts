@@ -10,7 +10,7 @@ export class GlobalVariableService {
   UserId: any;
   userType:any;
   signupId: any;
-  custTelType : any;
+  custTelType : any;   //prePaid or postPaid
   custComName: any;
-
+  custRate :any;
 }
