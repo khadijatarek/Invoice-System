@@ -38,11 +38,13 @@ export class LoginComponent {
   });
 
   this.gv.custTelType = await this.http.get<string>(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${nID}/telBillType/.json`).toPromise();
+  this.gv.custComName= await this.http.get<string>(`https://ui-project-d452e-default-rtdb.firebaseio.com/customer/${nID}/telCompany/.json`).toPromise();
 
 
     console.log("user is: ",this.gv.userType);
     console.log("Id is: ",this.gv.UserId);
     console.log('bill type is:', this.gv.custTelType);
+    console.log('company is:', this.gv.custComName);
 
     if(this.showErrorMessage == false)
      {

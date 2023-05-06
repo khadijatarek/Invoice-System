@@ -74,18 +74,6 @@ export class FirebaseService {
     );
   }
 
-
-
-  //payments
-  addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
-    return this.http.put(`${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,pay);
-  }
-
-  getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
-    return this.http.get<payment[]>(`${this.baseUrl}/customer/${userId}/${paymentType}.json`);
-  }
-
-
   getServices(providerId: string): Observable<any[]> {
     const url = `https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders/${providerId}/services/prePaid/.json`;
     return this.http.get<any[]>(url).pipe(
@@ -108,6 +96,62 @@ export class FirebaseService {
         return providerNames;
       })
     );
+  }
+
+
+  getServiceNamesByType(serviceProviderName: string, serviceType: string) {
+    return this.http.get('https://ui-project-d452e-default-rtdb.firebaseio.com/serviceProviders.json')
+      .pipe(
+        map((response: any) => {
+          const serviceNames: string[] = [];
+
+          Object.keys(response).forEach((spId) => {
+            const serviceProvider = response[spId];
+            const telCompany = serviceProvider.fname;
+            const services = serviceProvider.services;
+
+            if (telCompany === serviceProviderName && services[serviceType]) {
+              const serviceTypeObj = services[serviceType];
+
+              Object.keys(serviceTypeObj).forEach((serviceId) => {
+                const service = serviceTypeObj[serviceId];
+
+                if (service && service.id) {
+                  const subServiceName = service.name;
+                  console.log("name: ", subServiceName);
+
+                  if (subServiceName && !serviceNames.includes(subServiceName)) {
+                    serviceNames.push(subServiceName);
+                  }
+                }
+              });
+            }
+          });
+
+          console.log('Service names:', serviceNames);
+
+          return serviceNames;
+        })
+      );
+  }
+
+
+  //payments
+  addPendingPaymentForUser(userId:string,pay:payment,paymentType:string){
+    return this.http.put(`${this.baseUrl}/customer/${userId}/${paymentType}/${pay.id}.json`,pay);
+  }
+
+  getAllPayments(userId:string,paymentType:string) :Observable<payment[]> {
+    return this.http.get<payment[]>(`${this.baseUrl}/customer/${userId}/${paymentType}.json`);
+  }
+
+   //rates
+   addRates(rateType: string, rateValue: number) {
+    return this.http.put(`${this.baseUrl}/rates/${rateType}.json`, rateValue);
+  }
+
+  getRates(rateType: string): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/rates/${rateType}.json`);
   }
 
 

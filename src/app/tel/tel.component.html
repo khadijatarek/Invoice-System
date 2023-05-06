@@ -34,6 +34,14 @@
                       size="20"
                     />
                   </div>
+                  <div style="padding: 5px; width: 300px">
+
+                    <select *ngIf="serviceNames.length">
+                      <option value="">Select a package</option>
+                      <option *ngFor="let serviceName of serviceNames">{{ serviceName }}</option>
+                    </select>
+
+                  </div>
                   <div>
                     <label for="dueDate"></label>
                     <input
@@ -44,12 +52,13 @@
 
                     />
                   </div>
+
                   <!--Insert var here-->
                   <div class="col-auto">
                     <button
                       class="new-btn-style"
                       type="button"
-
+                      style="margin-top:10px ;"
                     >
                       Save
                     </button>
