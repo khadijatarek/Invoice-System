@@ -38,13 +38,9 @@ export class WaterComponent {
     this.maxDate = today.toISOString().substring(0, 10);
   }
   ngOnInit(): void {
-    //this.userID=userInfo.UserId;
-    this.userID = 454554;
+    this.userID = this.userInfo.UserId;
 
-    //gai mn el service
-    //this.rate = this.rateServ.waterRate;
     this.type = this.rateServ.waterBillType;
-    //this.extraRate = this.rateServ.waterExtraFeesRate;
     //update table
     this.getAllPayments();
   }

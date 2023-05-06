@@ -62,7 +62,7 @@ export class TelComponent implements OnInit {
     });
 
     //billing related
-    this.userID = 1111;
+    this.userID = this.userInfo.UserId;
 
     //gai mn el service
     this.type = this.rateServ.telBillType;

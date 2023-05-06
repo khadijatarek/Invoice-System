@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../shared/firebase.service';
+import { GlobalVariableService } from '../shared/global-variable.service';
+import { UserInfo } from 'firebase/auth';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -21,12 +23,17 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   isEditable = false;
   profileData: any = {};
-
-  constructor(private formBuilder: FormBuilder, private db: FirebaseService) {}
+  userID;
+  constructor(
+    private formBuilder: FormBuilder,
+    private db: FirebaseService,
+    private userInfo: GlobalVariableService
+  ) {}
 
   ngOnInit(): void {
-    const userID = '0000'; // Replace with your own user ID
-    this.db.getUser(userID).subscribe((data: any) => {
+    //const userID = '0000'; // Replace with your own user ID
+    this.userID = this.userInfo.UserId;
+    this.db.getUser(this.userID).subscribe((data: any) => {
       this.profileData = data;
       console.log('dataaaaaaaaaa', data);
       this.initForm();

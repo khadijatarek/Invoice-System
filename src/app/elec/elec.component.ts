@@ -38,8 +38,8 @@ export class ElecComponent implements OnInit {
     this.maxDate = today.toISOString().substring(0, 10);
   }
   ngOnInit(): void {
-    //this.userID=userInfo.UserId;
-    this.userID = 1111;
+    this.userID = this.userInfo.UserId;
+    console.log(this.userID);
     this.type = this.rateServ.elecBillType;
 
     //update table
