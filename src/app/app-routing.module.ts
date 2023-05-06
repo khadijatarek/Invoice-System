@@ -14,6 +14,7 @@ import { SpPageComponent } from './sp-page/sp-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 
 const routes: Routes = [
+  {path: '', component:LoginComponent},
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },

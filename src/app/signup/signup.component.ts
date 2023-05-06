@@ -4,7 +4,7 @@ import {
   FormGroup,
   Validators,
   FormControl,
-  AbstractControl,
+  AbstractControl,ValidatorFn
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from '../shared/firebase.service';
@@ -15,6 +15,15 @@ import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MyDialogComponentComponent } from '../my-dialog-component/my-dialog-component.component';
 
+
+export function passwordMatchValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const pass1 = control.get('pass1');
+    const pass2 = control.get('pass2');
+
+    return pass1 && pass2 && pass1.value !== pass2.value ? { 'passwordMismatch': true } : null;
+  };
+}
 
 @Component({
   selector: 'app-signup',
@@ -66,7 +75,7 @@ export class SignupComponent implements OnInit {
       ],
       type: ['', [Validators.required]],
       sp: [''],
-    });
+    },{ validator: passwordMatchValidator() });
   }
   ngOnInit(): void {
     this.Db.getServiceProviders().subscribe(
@@ -82,7 +91,7 @@ export class SignupComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(MyDialogComponentComponent, {
-      width: '400px',
+      width: '600px',
       data: { message: 'Dialog message' }
     });
 
@@ -93,6 +102,18 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     // console.log(this.myform.get('myRadio').value);
+
+  /*  if (this.myform.valid) {
+      const dialogRef = this.dialog.open(MyDialogComponentComponent, {
+        width: '600px',
+        data: { message: 'Signup successful!' }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }*/
+
     this.gb.signupId = this.myform.controls['NationalID'].value;
 
     const dataAdmin = {
