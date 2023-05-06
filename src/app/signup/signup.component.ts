@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 import { SPsignupComponent } from '../spsignup/spsignup.component';
 import { GlobalVariableService } from '../shared/global-variable.service';
 import { Observable, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MyDialogComponentComponent } from '../my-dialog-component/my-dialog-component.component';
+
 
 @Component({
   selector: 'app-signup',
@@ -26,6 +29,7 @@ export class SignupComponent implements OnInit {
   selectedProvider: any;
 
   constructor(
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private Db: FirebaseService,
     private router: Router,
@@ -74,6 +78,17 @@ export class SignupComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(MyDialogComponentComponent, {
+      width: '400px',
+      data: { message: 'Dialog message' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   onSubmit() {

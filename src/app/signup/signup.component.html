@@ -74,7 +74,7 @@
       <div *ngIf="isServiceProvider == true">
         <app-spsignup [nId]?="nId"></app-spsignup>
       </div>
-      <div class="mt-5 text-center"><button type="submit">SignUp</button></div>
+      <div class="mt-5 text-center"><button mat-raised-button (click)="openDialog()" type="submit">SignUp</button></div>
     </div>
   </form>
 </body>

@@ -25,6 +25,10 @@ import { PaymentHistoryComponent } from './payment-history/payment-history.compo
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SpPageComponent } from './sp-page/sp-page.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MyDialogComponentComponent } from './my-dialog-component/my-dialog-component.component';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +47,7 @@ import { FooterComponent } from './footer/footer.component';
     AdminPageComponent,
     SpPageComponent,
     FooterComponent,
+    MyDialogComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ import { FooterComponent } from './footer/footer.component';
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
     HttpClientModule,
+    MatDialogModule,BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
