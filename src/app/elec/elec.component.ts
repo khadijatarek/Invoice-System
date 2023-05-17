@@ -31,11 +31,9 @@ export class ElecComponent implements OnInit {
     this.maxDate = today.toISOString().substring(0, 10);
   }
   ngOnInit(): void {
-    //this.userID = this.userInfo.UserId;
-    this.userID = 123456;
+    this.userID = this.userInfo.UserId;
     console.log(this.userID);
     this.type = this.rateServ.elecBillType;
-
     //update table
     this.getAllPayments();
   }
@@ -74,8 +72,6 @@ export class ElecComponent implements OnInit {
 
   payPendingPayment(pay: payment) {
     pay.isPaid = true;
-    pay.paymentDay = new Date();
-
     this.billing
       .payPayment(this.userID.toString(), pay, this.type)
       .subscribe((response: any) => {

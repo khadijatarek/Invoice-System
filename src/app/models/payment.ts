@@ -10,11 +10,10 @@ export class payment {
 
   constructor(
     id: string,
-    /*dueDate:Date, */ unitsUsed: number,
+    unitsUsed: number,
     totalAmount: number,
     isPaid: boolean
   ) {
-    //this.dueDate=dueDate;
     this.id = id;
     this.unitsUsed = unitsUsed;
     this.totalAmount = totalAmount;
