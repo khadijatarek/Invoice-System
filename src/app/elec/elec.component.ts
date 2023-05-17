@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { payment } from '../models/payment';
-import { v4 as uuidv4 } from 'uuid';
 import { BillingService } from '../shared/billing.service';
 import { GlobalVariableService } from '../shared/global-variable.service';
 import { RateService } from '../shared/rate.service';
@@ -15,18 +14,12 @@ export class ElecComponent implements OnInit {
   @ViewChild('myForm') myForm: NgForm;
 
   pendingPayments: payment[] = [];
-  totalAmount: number;
-  enteredUnits: string;
 
-  //rate: number;
   type: string;
-  //extraRate: number;
-
   userID: number;
 
+  enteredUnits: string;
   enteredDate: string;
-  dueDate: Date;
-
   maxDate: string;
 
   constructor(
@@ -38,7 +31,8 @@ export class ElecComponent implements OnInit {
     this.maxDate = today.toISOString().substring(0, 10);
   }
   ngOnInit(): void {
-    this.userID = this.userInfo.UserId;
+    //this.userID = this.userInfo.UserId;
+    this.userID = 123456;
     console.log(this.userID);
     this.type = this.rateServ.elecBillType;
 
@@ -51,37 +45,18 @@ export class ElecComponent implements OnInit {
       window.alert(`new reading saved`);
       this.getAllPayments();
       this.getAllPayments();
-      this.calculateDueDate();
-      //building payment
-      let generatedPaymentId = uuidv4();
 
-      //calculate total(using service)
-      let paymentAmount = this.billing.calculatePaymentAmount(
+      //create new bill
+      let newPay: payment = this.billing.createNewPayment(
         this.rateServ.elecRate,
-        parseInt(this.enteredUnits)
-      );
-
-      //calculate extra fee
-      let extraFee = this.billing.addExtraFees(
-        this.dueDate,
-        paymentAmount,
+        parseInt(this.enteredUnits),
+        this.enteredDate,
         this.rateServ.elecExtraFeesRate
       );
 
-      //building payment
-      let newPayment = new payment(
-        generatedPaymentId,
-        parseInt(this.enteredUnits),
-        paymentAmount,
-        false
-      );
-      newPayment.rate = this.rateServ.elecRate;
-      newPayment.extraFee = extraFee;
-      newPayment.dueDate = this.dueDate;
-
       //save to firebase
       this.billing
-        .addNewPendingPayment(this.userID.toString(), newPayment, this.type)
+        .addNewPendingPayment(this.userID.toString(), newPay, this.type)
         .subscribe((response: any) => {
           console.log('Data added to Firebase Realtime Database:', response);
         });
@@ -98,7 +73,6 @@ export class ElecComponent implements OnInit {
   }
 
   payPendingPayment(pay: payment) {
-    // window.alert('payment done')
     pay.isPaid = true;
     pay.paymentDay = new Date();
 
@@ -108,7 +82,7 @@ export class ElecComponent implements OnInit {
         console.log('Data updated in Firebase Realtime Database:', response);
       });
     //update table
-    window.alert('payment done'); ///////////////// e3melii hena pop up
+    window.alert('payment done');
     this.getAllPayments();
   }
 
@@ -123,9 +97,5 @@ export class ElecComponent implements OnInit {
 
   getUnpaidBills(bills: payment[]): payment[] {
     return bills.filter((bill) => !bill.isPaid);
-  }
-
-  calculateDueDate() {
-    this.dueDate = this.billing.calcDueDate(this.enteredDate);
   }
 }
